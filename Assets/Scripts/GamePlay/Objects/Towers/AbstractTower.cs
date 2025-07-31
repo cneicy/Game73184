@@ -19,11 +19,11 @@ namespace GamePlay.Objects.Towers
     public abstract class AbstractTower : MonoBehaviour
     {
         public List<BaseTowerStrategy> Upgrades { get; set; } = new();
-        public DamageType damageType;
+        public DamageType DamageType { get; set; }
         public float PlaceCoolDown { get; set; }
         public int Damage { get; set; }
-        public float AttackSpeed;
-        public float AttackCoolDown;
+        public float AttackSpeed { get; set; }
+        public float AttackCoolDown { get; set; }
         public int Cost { get; set; }
 
         public void Move()
@@ -38,7 +38,7 @@ namespace GamePlay.Objects.Towers
 
         public void Attack()
         {
-            EventManager.Instance.TriggerEvent("AttackHero", new TowerAttack(damageType, Damage));
+            EventManager.Instance.TriggerEvent("AttackHero", new TowerAttack(DamageType, Damage));
         }
         public void Upgrade()
         {

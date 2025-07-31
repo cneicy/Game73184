@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Event;
+﻿using Event;
 using GamePlay.Objects.Towers;
 using UnityEngine;
 
