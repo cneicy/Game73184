@@ -50,6 +50,11 @@ namespace GamePlay.Objects.Heroes
                 return;
             }
 
+            LoadPath();
+        }
+
+        public void LoadPath()
+        {
             _pathPoints = map.GetRoadPathPoints();
 
             if (_pathPoints.Count > 0)
