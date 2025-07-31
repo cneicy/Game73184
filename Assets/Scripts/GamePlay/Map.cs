@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GamePlay
 {
@@ -10,62 +10,108 @@ namespace GamePlay
         public GameObject road;
         public GameObject slotPrefab;
 
-        [Header("X为地图宽、Y为地图高")]
-        public Vector2Int size = new Vector2Int(20, 20);
+        [Header("地图左上角起始点")] public Vector2 startPosition = Vector2.zero;
 
-        [Header("地图左上角起始点")]
-        public Vector2 startPosition = Vector2.zero;
+        [Header("每格大小")] public float gridSize = 1f;
 
-        [Header("每格大小")]
-        public float gridSize = 1f;
+        [Header("地图选择")] [Range(0, 3)] public int currentMapIndex = 0;
 
-        [Header("道路离边缘的距离")]
-        public int outerMargin = 2;
+        [Header("调试可视化")] public bool showBfsPath = true;
+        public bool showOptimizedPath = true;
 
-        [Header("道路宽度")]
-        public int roadWidth = 1;
-        
         [SerializeField] private float innerAreaPercentage;
+        [SerializeField] private List<Vector2Int> bfsPath;
+        [SerializeField] private List<Vector2Int> optimizedPath;
 
-        private void Start()
+        private readonly int[,,] _schema =
         {
-            MapSchema = new GameObject[size.x, size.y];
+            // 地图0
+            {
+                { 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 },
+                { 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0 },
+                { 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0 },
+                { 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0 },
+                { 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0 },
+                { 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0 },
+                { 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 }
+            },
+            // 地图1
+            {
+                { 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0 },
+                { 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0 },
+                { 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
+                { 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0 },
+                { 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+            },
+            // 地图2
+            {
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0 },
+                { 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0 },
+                { 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
+                { 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1 },
+                { 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1 },
+                { 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1 },
+                { 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0 }
+            },
+            // 地图3
+            {
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0 },
+                { 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                { 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1 },
+                { 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1 },
+                { 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1 }
+            }
+        };
+
+        private Vector2Int _size;
+
+        private void Awake()
+        {
+            _size = new Vector2Int(_schema.GetLength(2), _schema.GetLength(1));
+
+            Debug.Log($"地图尺寸: {_size.x}x{_size.y}, 当前地图索引: {currentMapIndex}");
+            Debug.Log($"Schema数组维度: [{_schema.GetLength(0)}, {_schema.GetLength(1)}, {_schema.GetLength(2)}]");
+
+            MapSchema = new GameObject[_size.x, _size.y];
             GenerateMap();
-            StartCoroutine(ReGen());
         }
 
-        private IEnumerator ReGen()
+        public void SwitchMap()
         {
-            yield return new WaitForSeconds(2f);
-            GenerateMap();
-            StartCoroutine(ReGen());
+            SwitchToMap(currentMapIndex);
         }
 
         public void GenerateMap()
         {
             ClearMap();
-            
-            // 计算内部区域尺寸
-            var innerWidth = size.x - 2 * (outerMargin + roadWidth);
-            var innerHeight = size.y - 2 * (outerMargin + roadWidth);
 
-            // 计算内部区域占比
-            var totalCells = size.x * size.y;
-            var innerCells = innerWidth * innerHeight;
-            innerAreaPercentage = (float)innerCells / totalCells * 100;
+            var roadCount = 0;
 
-            // 生成地图
-            for (var x = 0; x < size.x; x++)
+            for (var y = 0; y < _size.y; y++)
             {
-                for (var y = 0; y < size.y; y++)
+                for (var x = 0; x < _size.x; x++)
                 {
                     var pos = new Vector3(
                         startPosition.x + x * gridSize,
                         startPosition.y - y * gridSize,
                         0f);
 
-                    // 判断是否在道路区域
-                    var isRoad = IsInRoadArea(x, y);
+                    var cellType = _schema[currentMapIndex, y, x];
+                    var isRoad = cellType == 1;
+
+                    if (isRoad) roadCount++;
 
                     var cell = isRoad
                         ? Instantiate(road, pos, Quaternion.identity, transform)
@@ -73,76 +119,242 @@ namespace GamePlay
 
                     MapSchema[x, y] = cell;
 
-                    // 给 slot 存网格坐标
                     var slot = cell.GetComponent<Slot>();
                     if (slot)
                         slot.gridPosition = new Vector2Int(x, y);
                 }
             }
 
-            Debug.Log($"地图生成完成！道路宽度={roadWidth}，道路离边缘={outerMargin}格，内部区域占比={innerAreaPercentage:F1}%");
+            var totalCells = _size.x * _size.y;
+            var innerCells = totalCells - roadCount;
+            innerAreaPercentage = (float)innerCells / totalCells * 100;
+
+            Debug.Log($"地图 {currentMapIndex + 1} 生成完成！道路格子数={roadCount}，内部区域占比={innerAreaPercentage:F1}%");
         }
 
-        // 判断一个点是否在道路区域内
-        private bool IsInRoadArea(int x, int y)
+        public List<Vector2> GetRoadPathPoints()
         {
-            // 道路区域：从边缘向内outerMargin格开始，宽度为roadWidth
-            // 上边道路
-            if (y >= outerMargin && y < outerMargin + roadWidth && 
-                x >= outerMargin && x < size.x - outerMargin)
-                return true;
-            
-            // 下边道路
-            if (y >= size.y - outerMargin - roadWidth && y < size.y - outerMargin && 
-                x >= outerMargin && x < size.x - outerMargin)
-                return true;
-            
-            // 左边道路
-            if (x >= outerMargin && x < outerMargin + roadWidth && 
-                y >= outerMargin && y < size.y - outerMargin)
-                return true;
+            var pathPoints = new List<Vector2>();
 
-            // 右边道路
-            return x >= size.x - outerMargin - roadWidth && x < size.x - outerMargin && 
-                   y >= outerMargin && y < size.y - outerMargin;
+            var startPoint = FindStartPoint();
+            if (startPoint == Vector2Int.one * -1)
+            {
+                Debug.LogError("没有找到道路起始点");
+                return pathPoints;
+            }
+
+            bfsPath = BfsGetAllRoadCells(startPoint);
+            Debug.Log($"BFS找到 {bfsPath.Count} 个道路格子");
+
+            optimizedPath = GenerateCircularPath(bfsPath, startPoint);
+            Debug.Log($"生成连续路径，共 {optimizedPath.Count} 个路径点");
+
+            pathPoints.AddRange(optimizedPath.Select(gridPoint =>
+                new Vector2(startPosition.x + gridPoint.x * gridSize, startPosition.y - gridPoint.y * gridSize)));
+
+            return pathPoints;
+        }
+
+        private Vector2Int FindStartPoint()
+        {
+            Debug.Log($"寻找地图 {currentMapIndex} 的起始点, 地图尺寸: {_size.x}x{_size.y}");
+
+            for (var y = 0; y < _size.y; y++)
+            {
+                for (var x = 0; x < _size.x; x++)
+                {
+                    var cellValue = _schema[currentMapIndex, y, x];
+                    if (cellValue != 1) continue;
+                    Debug.Log($"找到起始点: ({x}, {y}), 值={cellValue}");
+                    return new Vector2Int(x, y);
+                }
+            }
+
+            Debug.LogError("没有找到道路格子！打印当前地图数据：");
+            for (var y = 0; y < _size.y; y++)
+            {
+                var row = "";
+                for (var x = 0; x < _size.x; x++)
+                {
+                    row += _schema[currentMapIndex, y, x] + " ";
+                }
+
+                Debug.Log($"Row {y}: {row}");
+            }
+
+            return Vector2Int.one * -1;
+        }
+
+        private List<Vector2Int> BfsGetAllRoadCells(Vector2Int startPoint)
+        {
+            var roadCells = new List<Vector2Int>();
+            var visited = new HashSet<Vector2Int>();
+            var queue = new Queue<Vector2Int>();
+
+            queue.Enqueue(startPoint);
+            visited.Add(startPoint);
+
+            var directions = new Vector2Int[]
+            {
+                new(0, -1), // 上
+                new(0, 1), // 下
+                new(-1, 0), // 左
+                new(1, 0) // 右
+            };
+
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                roadCells.Add(current);
+
+                foreach (var direction in directions)
+                {
+                    var neighbor = current + direction;
+
+                    if (neighbor.x < 0 || neighbor.x >= _size.x ||
+                        neighbor.y < 0 || neighbor.y >= _size.y)
+                        continue;
+
+                    if (visited.Contains(neighbor))
+                        continue;
+
+                    if (_schema[currentMapIndex, neighbor.y, neighbor.x] != 1)
+                        continue;
+
+                    queue.Enqueue(neighbor);
+                    visited.Add(neighbor);
+                }
+            }
+
+            return roadCells;
+        }
+
+        private List<Vector2Int> GenerateCircularPath(List<Vector2Int> allRoadCells, Vector2Int startPoint)
+        {
+            if (allRoadCells.Count == 0) return new List<Vector2Int>();
+
+            var path = new List<Vector2Int>();
+            var remaining = new HashSet<Vector2Int>(allRoadCells);
+            var current = startPoint;
+
+            path.Add(current);
+            remaining.Remove(current);
+
+            while (remaining.Count > 0)
+            {
+                var nextPoint = current;
+                var minDistance = float.MaxValue;
+                var foundAdjacent = false;
+
+                foreach (var candidate in remaining)
+                {
+                    var distance = Vector2Int.Distance(current, candidate);
+                    if (!(distance <= 1.5f)) continue;
+                    if (!(distance < minDistance)) continue;
+                    minDistance = distance;
+                    nextPoint = candidate;
+                    foundAdjacent = true;
+                }
+
+                if (!foundAdjacent)
+                {
+                    foreach (var candidate in remaining)
+                    {
+                        var distance = Vector2Int.Distance(current, candidate);
+                        if (!(distance < minDistance)) continue;
+                        minDistance = distance;
+                        nextPoint = candidate;
+                    }
+                }
+
+                path.Add(nextPoint);
+                remaining.Remove(nextPoint);
+                current = nextPoint;
+            }
+
+            return path;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (!Application.isPlaying) return;
+            if (showBfsPath && bfsPath is { Count: > 0 })
+            {
+                Gizmos.color = Color.red;
+                foreach (var worldPos in bfsPath.Select(gridPoint => new Vector3(
+                             startPosition.x + gridPoint.x * gridSize,
+                             startPosition.y - gridPoint.y * gridSize,
+                             0)))
+                {
+                    Gizmos.DrawCube(worldPos, Vector3.one * 0.3f);
+                }
+            }
+
+            if (!showOptimizedPath || optimizedPath is not { Count: > 0 }) return;
+            {
+                Gizmos.color = Color.green;
+
+                foreach (var worldPos in optimizedPath.Select(gridPoint => new Vector3(
+                             startPosition.x + gridPoint.x * gridSize,
+                             startPosition.y - gridPoint.y * gridSize,
+                             0)))
+                {
+                    Gizmos.DrawSphere(worldPos, 0.2f);
+                }
+
+                Gizmos.color = Color.yellow;
+                for (var i = 0; i < optimizedPath.Count; i++)
+                {
+                    var current = optimizedPath[i];
+                    var next = optimizedPath[(i + 1) % optimizedPath.Count];
+
+                    var currentWorld = new Vector3(
+                        startPosition.x + current.x * gridSize,
+                        startPosition.y - current.y * gridSize,
+                        0);
+                    var nextWorld = new Vector3(
+                        startPosition.x + next.x * gridSize,
+                        startPosition.y - next.y * gridSize,
+                        0);
+
+                    Gizmos.DrawLine(currentWorld, nextWorld);
+                }
+            }
         }
 
         private void ClearMap()
         {
             if (MapSchema == null) return;
+
             foreach (var go in MapSchema)
-                if (go) DestroyImmediate(go);
+                if (go)
+                    DestroyImmediate(go);
         }
 
-        // 获取道路中心线路径点
-        public List<Vector2> GetRoadPathPoints()
+        public void SwitchToMap(int mapIndex)
         {
-            var list = new List<Vector2>();
-            var m = outerMargin + roadWidth / 2; // 道路中心离边缘格数
-            var w = size.x;
-            var h = size.y;
+            if (mapIndex >= 0 && mapIndex < _schema.GetLength(0))
+            {
+                currentMapIndex = mapIndex;
+                GenerateMap();
+            }
+        }
 
-            // 上边：从左到右
-            for (var x = m; x < w - m; x++)
-                list.Add(new Vector2(startPosition.x + x * gridSize,
-                                     startPosition.y - m * gridSize));
-            
-            // 右边：从上到下（跳过起点，避免重复）
-            for (var y = m + 1; y < h - m; y++)
-                list.Add(new Vector2(startPosition.x + (w - 1 - m) * gridSize,
-                                     startPosition.y - y * gridSize));
-            
-            // 下边：从右到左（跳过起点，避免重复）
-            for (var x = w - 2 - m; x >= m; x--)
-                list.Add(new Vector2(startPosition.x + x * gridSize,
-                                     startPosition.y - (h - 1 - m) * gridSize));
-            
-            // 左边：从下到上（跳过起点和终点，避免重复）
-            for (var y = h - 2 - m; y > m; y--)
-                list.Add(new Vector2(startPosition.x + m * gridSize,
-                                     startPosition.y - y * gridSize));
+        private int GetCellType(int x, int y)
+        {
+            if (x >= 0 && x < _size.x && y >= 0 && y < _size.y)
+                return _schema[currentMapIndex, y, x];
+            return -1;
+        }
 
-            return list;
+        public bool IsRoad(int x, int y)
+        {
+            return GetCellType(x, y) == 1;
+        }
+
+        public bool IsSlot(int x, int y)
+        {
+            return GetCellType(x, y) == 0;
         }
     }
 }
