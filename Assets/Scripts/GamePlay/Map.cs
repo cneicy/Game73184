@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -30,6 +31,14 @@ namespace GamePlay
         {
             MapSchema = new GameObject[size.x, size.y];
             GenerateMap();
+            StartCoroutine(ReGen());
+        }
+
+        private IEnumerator ReGen()
+        {
+            yield return new WaitForSeconds(2f);
+            GenerateMap();
+            StartCoroutine(ReGen());
         }
 
         public void GenerateMap()
