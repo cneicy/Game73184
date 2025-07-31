@@ -57,7 +57,11 @@ namespace GamePlay.Objects.Heroes
 
         public void OnTriggerEnter2D(Collider2D other)
         {
-            
+            if (other.CompareTag("Tower"))
+            {
+                //todo:等待戈多
+                EventManager.Instance.TriggerEvent("AttackTower", "此处等待策划");
+            }
         }
     }
 }

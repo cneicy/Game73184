@@ -9,25 +9,28 @@ namespace GamePlay.Objects.Heroes
     {
         public Map map;
         public float moveSpeed = 5f;
-        public bool faceMovementDirection = true;
 
         private List<Vector2> _pathPoints;
         private int _currentTargetIndex;
         private bool _isMoving;
         private SpriteRenderer _spriteRenderer;
-        
+        private Animator _animator;
+
+        private static readonly int DirX = Animator.StringToHash("DirX");
+        private static readonly int DirY = Animator.StringToHash("DirY");
+
         private void OnEnable()
         {
-            if(EventManager.Instance)
+            if (EventManager.Instance)
                 EventManager.Instance.RegisterEventHandlersFromAttributes(this);
         }
 
         private void OnDisable()
         {
-            if(EventManager.Instance)
+            if (EventManager.Instance)
                 EventManager.Instance.UnregisterAllEventsForObject(this);
         }
-        
+
         [EventSubscribe("AttackHero")]
         public object OnGetHurt(TowerAttack towerAttack)
         {
@@ -44,9 +47,17 @@ namespace GamePlay.Objects.Heroes
             }
 
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            _animator = GetComponentInChildren<Animator>();
+
             if (_spriteRenderer == null)
             {
                 Debug.LogError("SpriteRenderer组件未找到");
+                return;
+            }
+
+            if (_animator == null)
+            {
+                Debug.LogError("Animator组件未找到");
                 return;
             }
 
@@ -78,19 +89,40 @@ namespace GamePlay.Objects.Heroes
             var direction = targetPoint - (Vector2)transform.position;
             direction.Normalize();
 
-            //transform.position = Vector2.Lerp(transform.position, targetPoint, moveSpeed * Time.deltaTime);
             transform.position += (Vector3)direction * (moveSpeed * Time.deltaTime);
 
+            UpdateAnimationParameters(direction);
+
+            // 检查是否到达目标点
             if (Vector2.Distance(transform.position, targetPoint) < 0.1f)
             {
                 _currentTargetIndex = (_currentTargetIndex + 1) % _pathPoints.Count;
             }
+        }
 
-            if (!faceMovementDirection || direction == Vector2.zero) return;
-            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        private void UpdateAnimationParameters(Vector2 direction)
+        {
+            if (!_animator || direction == Vector2.zero) return;
 
-            transform.rotation = Quaternion.Euler(0, 0, angle);
-            _spriteRenderer.flipX = direction.x < 0;
+            // 将方向转换为整数值（-1, 0, 1）
+            int dirX;
+            int dirY;
+
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            {
+                dirX = direction.x > 0 ? 1 : -1;
+                dirY = 0;
+            }
+            else
+            {
+                dirX = 0;
+                dirY = direction.y > 0 ? 1 : -1;
+            }
+
+            _animator.SetInteger(DirX, dirX);
+            _animator.SetInteger(DirY, dirY);
+
+            Debug.Log($"Direction: {direction}, DirX: {dirX}, DirY: {dirY}");
         }
 
         private void OnDrawGizmos()

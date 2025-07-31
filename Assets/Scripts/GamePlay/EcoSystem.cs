@@ -32,6 +32,10 @@ namespace GamePlay
         private void Start()
         {
             TowerPriceIndex.Add(TowerType.UnDefine,0);
+            TowerPriceIndex.Add(TowerType.Domino,10);
+            TowerPriceIndex.Add(TowerType.Blindeye,11);
+            TowerPriceIndex.Add(TowerType.CompetitiveFulcrum,12);
+            TowerPriceIndex.Add(TowerType.Mirror,13);
         }
     }
 }
