@@ -23,8 +23,8 @@ namespace GamePlay.Objects.Heroes
         private void OnTriggerEnter2D(Collider2D other)
         {
             //todo : 被“子弹”攻击
-            if(other.CompareTag("此处写攻击物"))
-                EventManager.Instance.TriggerEvent("HeroGetHurt",health);
+            /*if(other.CompareTag("此处写攻击物"))
+                EventManager.Instance.TriggerEvent("HeroGetHurt",health);*/
         }
     }
 }
