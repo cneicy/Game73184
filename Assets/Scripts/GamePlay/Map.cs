@@ -14,7 +14,7 @@ namespace GamePlay
 
         [Header("每格大小")] public float gridSize = 1f;
 
-        [Header("地图选择")] [Range(0, 3)] public int currentMapIndex = 0;
+        [Header("地图选择")] [Range(0, 3)] public int currentMapIndex;
 
         [Header("调试可视化")] public bool showBfsPath = true;
         public bool showOptimizedPath = true;

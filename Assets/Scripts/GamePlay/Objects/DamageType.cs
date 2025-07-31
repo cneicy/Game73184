@@ -2,6 +2,8 @@
 {
     public enum DamageType
     {
-        Normal
+        UnDefine,
+        Normal,
+        Energy
     }
 }
