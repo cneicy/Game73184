@@ -15,6 +15,18 @@ namespace GamePlay.Objects.Heroes
             set => health = value;
         }
 
+        private void OnEnable()
+        {
+            if(EventManager.Instance)
+                EventManager.Instance.RegisterEventHandlersFromAttributes(this);
+        }
+
+        private void OnDisable()
+        {
+            if(EventManager.Instance)
+                EventManager.Instance.UnregisterAllEventsForObject(this);
+        }
+
         private void Start()
         {
             DamageSourceTimes = new Dictionary<DamageType, int> { { DamageType.Normal, 0 } };
