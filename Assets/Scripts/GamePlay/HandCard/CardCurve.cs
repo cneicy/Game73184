@@ -13,6 +13,7 @@ namespace GamePlay.HandCard
         [SerializeField] private SplineContainer splineContainer;
         [SerializeField] private Transform spawnPoint;
         private List<GameObject> _handCards = new List<GameObject>();
+        private Vector3 _difPos = new Vector3(-6,-6,0);
 
         private void Update()
         {
@@ -43,7 +44,7 @@ namespace GamePlay.HandCard
                 Vector3 forward = spline.EvaluateTangent(p);
                 Vector3 up = spline.EvaluateUpVector(p);
                 Quaternion rotation = Quaternion.LookRotation(up,Vector3.Cross(up,forward).normalized);
-                _handCards[i].transform.DOMove(splinePosition, 0.25f);
+                _handCards[i].transform.DOMove(splinePosition+_difPos, 0.25f);
                 _handCards[i].transform.DORotateQuaternion(rotation, 0.25f);
             }
         }
