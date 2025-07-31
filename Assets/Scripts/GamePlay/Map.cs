@@ -27,34 +27,31 @@ namespace GamePlay
 
         public void GenerateMap()
         {
-            // 清空现有地图
             ClearMap();
             
             // 计算总网格数
-            int totalCells = (int)(widthAndHeight.x * widthAndHeight.y);
+            var totalCells = (int)(widthAndHeight.x * widthAndHeight.y);
             
             // 计算目标内部区域大小 (75%-85%)
-            int minInnerCells = Mathf.FloorToInt(totalCells * 0.75f);
-            int maxInnerCells = Mathf.FloorToInt(totalCells * 0.85f);
+            var minInnerCells = Mathf.FloorToInt(totalCells * 0.75f);
+            var maxInnerCells = Mathf.FloorToInt(totalCells * 0.85f);
             
             // 尝试不同的道路宽度
-            int bestRoadWidth = 1;
-            int bestInnerCells = 0;
-            int bestDiff = int.MaxValue;
+            var bestRoadWidth = 1;
+            var bestInnerCells = 0;
+            var bestDiff = int.MaxValue;
             
             // 道路宽度从1开始尝试，最大不超过地图尺寸的一半
-            for (int roadWidth = 1; roadWidth <= Mathf.Min(widthAndHeight.x, widthAndHeight.y) / 2; roadWidth++)
+            for (var roadWidth = 1; roadWidth <= Mathf.Min(widthAndHeight.x, widthAndHeight.y) / 2; roadWidth++)
             {
                 // 计算当前道路宽度下的内部区域大小
-                int innerWidth = (int)widthAndHeight.x - 2 * roadWidth;
-                int innerHeight = (int)widthAndHeight.y - 2 * roadWidth;
-                int innerCells = innerWidth * innerHeight;
+                var innerWidth = (int)widthAndHeight.x - 2 * roadWidth;
+                var innerHeight = (int)widthAndHeight.y - 2 * roadWidth;
+                var innerCells = innerWidth * innerHeight;
                 
-                // 如果内部区域太小，停止尝试
                 if (innerCells <= 0) break;
                 
-                // 计算与目标范围的差距
-                int diff = 0;
+                int diff;
                 if (innerCells < minInnerCells)
                 {
                     diff = minInnerCells - innerCells;
@@ -65,47 +62,37 @@ namespace GamePlay
                 }
                 else
                 {
-                    // 如果在目标范围内，直接使用
                     bestRoadWidth = roadWidth;
                     bestInnerCells = innerCells;
                     break;
                 }
                 
-                // 记录最接近目标范围的配置
-                if (diff < bestDiff)
-                {
-                    bestDiff = diff;
-                    bestRoadWidth = roadWidth;
-                    bestInnerCells = innerCells;
-                }
+                if (diff >= bestDiff) continue;
+                bestDiff = diff;
+                bestRoadWidth = roadWidth;
+                bestInnerCells = innerCells;
             }
             
-            // 保存道路宽度供其他脚本使用
             roadWidth = bestRoadWidth;
             
-            // 生成地图
-            for (int x = 0; x < widthAndHeight.x; x++)
+            for (var x = 0; x < widthAndHeight.x; x++)
             {
-                for (int y = 0; y < widthAndHeight.y; y++)
+                for (var y = 0; y < widthAndHeight.y; y++)
                 {
-                    // 判断是否在道路环上
-                    if (x < bestRoadWidth || x >= widthAndHeight.x - bestRoadWidth ||
-                        y < bestRoadWidth || y >= widthAndHeight.y - bestRoadWidth)
-                    {
-                        // 计算世界坐标位置（2D环境）
-                        Vector3 position = new Vector3(
-                            startPosition.x + x * gridSize,
-                            startPosition.y - y * gridSize,  // 注意：这里减去y，因为y轴向下
-                            0
-                        );
+                    if (x >= bestRoadWidth && !(x >= widthAndHeight.x - bestRoadWidth) &&
+                        y >= bestRoadWidth && !(y >= widthAndHeight.y - bestRoadWidth)) continue;
+                    var position = new Vector3(
+                        startPosition.x + x * gridSize,
+                        startPosition.y - y * gridSize,
+                        0
+                    );
                         
-                        MapSchema[x, y] = Instantiate(road, position, Quaternion.identity, transform);
-                    }
+                    MapSchema[x, y] = Instantiate(road, position, Quaternion.identity, transform);
                 }
             }
             
             // 输出调试信息
-            float percentage = (float)bestInnerCells / totalCells * 100;
+            var percentage = (float)bestInnerCells / totalCells * 100;
             Debug.Log($"地图生成完成! 道路宽度: {bestRoadWidth}, 内部区域: {bestInnerCells}个格子 ({percentage:F1}%)");
             Debug.Log($"地图起始位置: ({startPosition.x}, {startPosition.y}), 格子大小: {gridSize}");
         }
@@ -114,57 +101,53 @@ namespace GamePlay
         {
             if (MapSchema == null) return;
             
-            for (int x = 0; x < widthAndHeight.x; x++)
+            for (var x = 0; x < widthAndHeight.x; x++)
             {
-                for (int y = 0; y < widthAndHeight.y; y++)
+                for (var y = 0; y < widthAndHeight.y; y++)
                 {
-                    if (MapSchema[x, y] != null)
-                    {
-                        Destroy(MapSchema[x, y]);
-                        MapSchema[x, y] = null;
-                    }
+                    if (!MapSchema[x, y]) continue;
+                    Destroy(MapSchema[x, y]);
+                    MapSchema[x, y] = null;
                 }
             }
         }
         
-        // 获取道路路径点（供Hero使用）
         public List<Vector2> GetRoadPathPoints()
         {
-            List<Vector2> pathPoints = new List<Vector2>();
+            var pathPoints = new List<Vector2>();
             
-            int width = (int)widthAndHeight.x;
-            int height = (int)widthAndHeight.y;
-            float halfRoadWidth = roadWidth / 2f;
+            var width = (int)widthAndHeight.x;
+            var height = (int)widthAndHeight.y;
             
             // 上边：从左到右
-            for (int x = roadWidth; x < width - roadWidth; x++)
+            for (var x = roadWidth; x < width - roadWidth; x++)
             {
-                float worldX = startPosition.x + x * gridSize;
-                float worldY = startPosition.y;
+                var worldX = startPosition.x + x * gridSize;
+                var worldY = startPosition.y;
                 pathPoints.Add(new Vector2(worldX, worldY));
             }
             
             // 右边：从上到下
-            for (int y = roadWidth; y < height - roadWidth; y++)
+            for (var y = roadWidth; y < height - roadWidth; y++)
             {
-                float worldX = startPosition.x + (width - 1) * gridSize;
-                float worldY = startPosition.y - y * gridSize;
+                var worldX = startPosition.x + (width - 1) * gridSize;
+                var worldY = startPosition.y - y * gridSize;
                 pathPoints.Add(new Vector2(worldX, worldY));
             }
             
             // 下边：从右到左
-            for (int x = width - roadWidth - 1; x >= roadWidth; x--)
+            for (var x = width - roadWidth - 1; x >= roadWidth; x--)
             {
-                float worldX = startPosition.x + x * gridSize;
-                float worldY = startPosition.y - (height - 1) * gridSize;
+                var worldX = startPosition.x + x * gridSize;
+                var worldY = startPosition.y - (height - 1) * gridSize;
                 pathPoints.Add(new Vector2(worldX, worldY));
             }
             
             // 左边：从下到上
-            for (int y = height - roadWidth - 1; y >= roadWidth; y--)
+            for (var y = height - roadWidth - 1; y >= roadWidth; y--)
             {
-                float worldX = startPosition.x;
-                float worldY = startPosition.y - y * gridSize;
+                var worldX = startPosition.x;
+                var worldY = startPosition.y - y * gridSize;
                 pathPoints.Add(new Vector2(worldX, worldY));
             }
             
