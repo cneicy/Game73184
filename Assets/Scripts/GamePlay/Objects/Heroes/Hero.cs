@@ -1,4 +1,5 @@
-﻿using Event;
+﻿using System;
+using Event;
 using GamePlay.Objects.Towers;
 using UnityEngine;
 
@@ -50,14 +51,13 @@ namespace GamePlay.Objects.Heroes
             else damageTime++;
             var finalDamage = towerAttack.Damage - damageTime * 0.1f;
             Health -= finalDamage;
+            EventManager.Instance.TriggerEvent("Harvest", finalDamage);
             return finalDamage;
         }
-        
-        private void OnTriggerEnter2D(Collider2D other)
+
+        public void OnTriggerEnter2D(Collider2D other)
         {
-            //todo : 被“子弹”攻击
-            /*if(other.CompareTag("此处写攻击物"))
-                EventManager.Instance.TriggerEvent("HeroGetHurt",health);*/
+            
         }
     }
 }

@@ -7,7 +7,7 @@ namespace GamePlay
 {
     public class EcoSystem : Singleton<EcoSystem>
     {
-        public int Money { get; set; }
+        public float Money { get; set; }
         public Dictionary<TowerType,int> TowerPriceIndex { get; set; }
 
         private void OnEnable()
@@ -20,6 +20,13 @@ namespace GamePlay
         {
             if(EventManager.Instance)
                 EventManager.Instance.UnregisterAllEventsForObject(this);
+        }
+
+        [EventSubscribe("Harvest")]
+        public object OnHarvest(float harvestMoney)
+        {
+            Money += harvestMoney;
+            return harvestMoney;
         }
 
         private void Start()
