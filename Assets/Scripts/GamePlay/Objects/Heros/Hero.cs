@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace GamePlay.Objects
+namespace GamePlay.Objects.Heros
 {
     public class Hero : MonoBehaviour
     {

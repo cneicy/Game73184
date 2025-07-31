@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace GamePlay
 {
@@ -8,6 +9,15 @@ namespace GamePlay
         public GameObject road;
         [Header("X为地图宽、Y为地图高")]
         public Vector2 widthAndHeight;
+        
+        [Header("地图起始位置（左上角）")]
+        public Vector2 startPosition = Vector2.zero;
+        
+        [Header("每个格子的大小")]
+        public float gridSize = 1f;
+        
+        [Header("道路宽度（自动计算）")]
+        public int roadWidth = 1;
 
         private void Start()
         {
@@ -70,6 +80,9 @@ namespace GamePlay
                 }
             }
             
+            // 保存道路宽度供其他脚本使用
+            roadWidth = bestRoadWidth;
+            
             // 生成地图
             for (int x = 0; x < widthAndHeight.x; x++)
             {
@@ -79,7 +92,13 @@ namespace GamePlay
                     if (x < bestRoadWidth || x >= widthAndHeight.x - bestRoadWidth ||
                         y < bestRoadWidth || y >= widthAndHeight.y - bestRoadWidth)
                     {
-                        Vector3 position = new Vector3(x, y, 0);
+                        // 计算世界坐标位置（2D环境）
+                        Vector3 position = new Vector3(
+                            startPosition.x + x * gridSize,
+                            startPosition.y - y * gridSize,  // 注意：这里减去y，因为y轴向下
+                            0
+                        );
+                        
                         MapSchema[x, y] = Instantiate(road, position, Quaternion.identity, transform);
                     }
                 }
@@ -88,6 +107,7 @@ namespace GamePlay
             // 输出调试信息
             float percentage = (float)bestInnerCells / totalCells * 100;
             Debug.Log($"地图生成完成! 道路宽度: {bestRoadWidth}, 内部区域: {bestInnerCells}个格子 ({percentage:F1}%)");
+            Debug.Log($"地图起始位置: ({startPosition.x}, {startPosition.y}), 格子大小: {gridSize}");
         }
         
         private void ClearMap()
@@ -105,6 +125,50 @@ namespace GamePlay
                     }
                 }
             }
+        }
+        
+        // 获取道路路径点（供Hero使用）
+        public List<Vector2> GetRoadPathPoints()
+        {
+            List<Vector2> pathPoints = new List<Vector2>();
+            
+            int width = (int)widthAndHeight.x;
+            int height = (int)widthAndHeight.y;
+            float halfRoadWidth = roadWidth / 2f;
+            
+            // 上边：从左到右
+            for (int x = roadWidth; x < width - roadWidth; x++)
+            {
+                float worldX = startPosition.x + x * gridSize;
+                float worldY = startPosition.y;
+                pathPoints.Add(new Vector2(worldX, worldY));
+            }
+            
+            // 右边：从上到下
+            for (int y = roadWidth; y < height - roadWidth; y++)
+            {
+                float worldX = startPosition.x + (width - 1) * gridSize;
+                float worldY = startPosition.y - y * gridSize;
+                pathPoints.Add(new Vector2(worldX, worldY));
+            }
+            
+            // 下边：从右到左
+            for (int x = width - roadWidth - 1; x >= roadWidth; x--)
+            {
+                float worldX = startPosition.x + x * gridSize;
+                float worldY = startPosition.y - (height - 1) * gridSize;
+                pathPoints.Add(new Vector2(worldX, worldY));
+            }
+            
+            // 左边：从下到上
+            for (int y = height - roadWidth - 1; y >= roadWidth; y--)
+            {
+                float worldX = startPosition.x;
+                float worldY = startPosition.y - y * gridSize;
+                pathPoints.Add(new Vector2(worldX, worldY));
+            }
+            
+            return pathPoints;
         }
     }
 }
