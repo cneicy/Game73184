@@ -2,6 +2,10 @@
 {
     public enum TowerType
     {
-        UnDefine
+        UnDefine,
+        Domino,
+        Mirror,
+        CompetitiveFulcrum,
+        Blindeye
     }
 }
