@@ -40,6 +40,7 @@ namespace GamePlay.Objects.Heroes
 
         private void Start()
         {
+            map = FindFirstObjectByType<Map>();
             if (!map)
             {
                 Debug.LogError("Map引用未设置");
