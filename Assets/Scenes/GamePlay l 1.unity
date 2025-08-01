@@ -451,6 +451,10 @@ MonoBehaviour:
     m_RotationOrder: 4
   maxFloatIntensity: 30
   randomIntensity: 0.5
+  minChromaticAberration: 0.2
+  maxChromaticAberration: 0.4
+  minLensDistortion: 17
+  maxLensDistortion: 22
 --- !u!1 &481058668
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,7 +885,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -105.03, y: 61.5692}
+  m_AnchoredPosition: {x: -105.03, y: 64.83}
   m_SizeDelta: {x: 115.8981, y: 75.0429}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &713715819
