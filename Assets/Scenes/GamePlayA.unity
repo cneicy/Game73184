@@ -852,6 +852,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1443612906}
   moveSpeed: 5
+  faceMovementDirection: 0
 --- !u!1 &929911096
 GameObject:
   m_ObjectHideFlags: 0

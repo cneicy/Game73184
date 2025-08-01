@@ -506,7 +506,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHandSize: 10
-  cardPrefab: {fileID: 2162294174283301129, guid: 7b841c7943e12324c8882c35de70754e, type: 3}
+  cardPrefab: {fileID: 1345639281155978355, guid: 080277bdd566b6b4fb7d969ce1450797, type: 3}
   splineContainer: {fileID: 1588668845}
   spawnPoint: {fileID: 1268256410}
 --- !u!1 &1980990352
@@ -849,8 +849,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 2044398884}
   - {fileID: 2035824826}
+  - {fileID: 2035580233}
   - {fileID: 1758886819}
   - {fileID: 1980990355}
-  - {fileID: 2035580233}
   - {fileID: 143620877}
   - {fileID: 2056856388}

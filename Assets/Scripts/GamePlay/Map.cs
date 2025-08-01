@@ -22,6 +22,8 @@ namespace GamePlay
         [SerializeField] private float innerAreaPercentage;
         [SerializeField] private List<Vector2Int> bfsPath;
         [SerializeField] private List<Vector2Int> optimizedPath;
+        
+        public List<Slot> allSlots = new List<Slot>();
 
         private readonly int[,,] _schema =
         {
@@ -116,6 +118,11 @@ namespace GamePlay
                     var cell = isRoad
                         ? Instantiate(road, pos, Quaternion.identity, transform)
                         : Instantiate(slotPrefab, pos, Quaternion.identity, transform);
+                    
+                    if (!isRoad)
+                    {
+                        allSlots.Add(cell.GetComponent<Slot>());
+                    }
 
                     MapSchema[x, y] = cell;
 

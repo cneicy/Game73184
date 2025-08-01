@@ -2,12 +2,14 @@
 
 namespace GamePlay
 {
-    public class Slot : MonoBehaviour
+    public class Slot : MonoBehaviour,IInteractable
     {
         public Vector2Int gridPosition; // 在地图网格中的位置
         public GameObject placedUnit;    // 放置在slot上的单位
         public bool isOuterSlot;        // 是否是外部slot（道路外部区域）
         public bool IsOccupied => placedUnit != null; // 是否已被占用
+        public bool _isBuilding;
+        [SerializeField] private GameObject towerGameObject;
     
         // 放置单位到slot
         public bool PlaceUnit(GameObject unit)
@@ -30,6 +32,15 @@ namespace GamePlay
             placedUnit = null;
         
             return true;
+        }
+
+        public void Interact()
+        {
+            if (_isBuilding)
+            {
+                Instantiate(towerGameObject,transform.position,transform.localRotation,transform);
+            }
+            print("建造");
         }
     }
 }
