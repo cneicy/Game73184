@@ -5,39 +5,27 @@ using UnityEngine.Serialization;
 
 namespace GamePlay.HandCard
 {
-    public class Card : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,IDragHandler,IEndDragHandler
+    public class Card : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
     {
-        private Vector3 _cardLocalPosition;
+        [SerializeField]private Vector3 _cardLocalPosition;
         private Transform _localTransform;
+        private SpriteRenderer _spriteRenderer;
 
         private void Start()
         {
             _cardLocalPosition = transform.localPosition;
             _localTransform = transform;
-            print(_cardLocalPosition);
-            print(transform.position);
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            print("111");
-            CardHover.Instance.MouseEnter(_cardLocalPosition,_localTransform);
+            CardHover.Instance.MouseEnter(_cardLocalPosition,_localTransform,_spriteRenderer);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            print("222");
-            CardHover.Instance.MouseExit(_cardLocalPosition,_localTransform);
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            throw new NotImplementedException();
+            CardHover.Instance.MouseExit(_cardLocalPosition,_localTransform,_spriteRenderer);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace GamePlay
     public class EcoSystem : Singleton<EcoSystem>
     {
         public int Money { get; set; }
-        public Dictionary<TowerType,int> TowerPriceIndex { get; set; }
+        public Dictionary<TowerType,int> TowerPriceIndex { get; set; } = new Dictionary<TowerType,int>();
 
         private void OnEnable()
         {
