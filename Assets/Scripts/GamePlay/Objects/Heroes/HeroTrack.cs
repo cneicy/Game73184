@@ -122,7 +122,7 @@ namespace GamePlay.Objects.Heroes
             _animator.SetInteger(DirX, dirX);
             _animator.SetInteger(DirY, dirY);
 
-            Debug.Log($"Direction: {direction}, DirX: {dirX}, DirY: {dirY}");
+            //Debug.Log($"Direction: {direction}, DirX: {dirX}, DirY: {dirY}");
         }
 
         private void OnDrawGizmos()

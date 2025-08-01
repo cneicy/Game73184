@@ -138,6 +138,7 @@ GameObject:
   - component: {fileID: 450179608}
   - component: {fileID: 450179610}
   - component: {fileID: 450179609}
+  - component: {fileID: 450179611}
   m_Layer: 3
   m_Name: CameraFilter
   m_TagString: Untagged
@@ -199,6 +200,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450179607}
   m_CullTransparentMesh: 1
+--- !u!114 &450179611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450179607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f32a18ddb9c2614c9a4f2008f46f802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  postProcessingCamera: {fileID: 1604077370}
+  showDebugRays: 1
+  rayColor: {r: 1, g: 0, b: 0, a: 1}
+  hitColor: {r: 0, g: 1, b: 0, a: 1}
+  gizmoSize: 1
+  verboseDebug: 1
 --- !u!1 &481058668
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,7 +516,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1443612906}
   moveSpeed: 1
-  faceMovementDirection: 0
 --- !u!1 &713715817
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -621,7 +639,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1248,7 +1266,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 14257faf3e950524cb45dd0cddf1a21d, type: 2}
   m_TargetDisplay: 0

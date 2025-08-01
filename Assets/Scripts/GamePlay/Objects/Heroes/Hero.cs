@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GamePlay.Objects.Heroes
 {
-    public class Hero : MonoBehaviour
+    public class Hero : MonoBehaviour , IInteractable
     {
         public float health;
         public DamageType damageType;
@@ -31,6 +31,11 @@ namespace GamePlay.Objects.Heroes
         private void Start()
         {
             Clear();
+        }
+
+        public void Interact()
+        {
+            Debug.Log("Interact");
         }
 
         public object Clear()
