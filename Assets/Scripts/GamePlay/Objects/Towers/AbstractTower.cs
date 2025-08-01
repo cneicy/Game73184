@@ -20,6 +20,7 @@ namespace GamePlay.Objects.Towers
     {
         public List<BaseTowerStrategy> Upgrades { get; set; } = new();
         public DamageType DamageType { get; set; }
+        public TowerType TowerType { get; set; }
         public float PlaceCoolDown { get; set; }
         public int Damage { get; set; }
         public float AttackSpeed { get; set; }

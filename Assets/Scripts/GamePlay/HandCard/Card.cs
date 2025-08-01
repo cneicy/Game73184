@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace GamePlay.HandCard
 {
