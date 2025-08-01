@@ -2,6 +2,7 @@
 using Event;
 using GamePlay.Objects;
 using Singleton;
+using UnityEngine;
 
 namespace GamePlay
 {
@@ -26,16 +27,20 @@ namespace GamePlay
         public object OnHarvest(float harvestMoney)
         {
             Money += harvestMoney;
+            Debug.Log("NowMoney:"+Money);
             return harvestMoney;
         }
 
         private void Start()
         {
-            TowerPriceIndex.Add(TowerType.UnDefine,0);
-            TowerPriceIndex.Add(TowerType.Domino,10);
-            TowerPriceIndex.Add(TowerType.Blindeye,11);
-            TowerPriceIndex.Add(TowerType.CompetitiveFulcrum,12);
-            TowerPriceIndex.Add(TowerType.Mirror,13);
+            TowerPriceIndex = new Dictionary<TowerType,int>
+            {
+                { TowerType.UnDefine, 0 },
+                { TowerType.Domino, 10 },
+                { TowerType.Blindeye, 11 },
+                { TowerType.CompetitiveFulcrum, 12 },
+                { TowerType.Mirror, 13 }
+            };
         }
     }
 }

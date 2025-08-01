@@ -57,6 +57,7 @@ namespace GamePlay.Objects.Heroes
             var finalDamage = towerAttack.Damage - damageTime * 0.1f;
             Health -= finalDamage;
             EventManager.Instance.TriggerEvent("Harvest", finalDamage);
+            Debug.Log("Hero Hit:"+finalDamage+"HPL:"+health);
             return finalDamage;
         }
 
