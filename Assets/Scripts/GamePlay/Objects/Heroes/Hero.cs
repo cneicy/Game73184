@@ -7,6 +7,7 @@ namespace GamePlay.Objects.Heroes
 {
     public class Hero : MonoBehaviour, IInteractable
     {
+        public static readonly float MaxHealth = 200f;
         [SerializeField] private ParticleSystem particles;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private float health;
@@ -85,16 +86,15 @@ namespace GamePlay.Objects.Heroes
             StartCoroutine(ColorChange());
             EventManager.Instance.TriggerEvent("Harvest", finalDamage);
             CheckHealth();
-            Debug.Log("Hero Hit:" + finalDamage + "HPL:" + health);
             return finalDamage;
         }
 
         public void CheckHealth()
         {
-            if (health <= 0)
-            {
-                EventManager.Instance.TriggerEvent("HeroDead", "等待戈多");
-            }
+            if (!(health <= 0)) return;
+            health = 0;
+            Debug.Log("Hero死亡");
+            EventManager.Instance.TriggerEvent("HeroDead", "等待戈多");
         }
 
         public void OnTriggerEnter2D(Collider2D other)

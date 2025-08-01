@@ -37,7 +37,6 @@ namespace Visual
         [EventSubscribe("Harvest")]
         public object TriggerHitEffect(float harvest)
         {
-            Debug.Log("114514");
             _rawImage.rectTransform.anchoredPosition = _originalPosition;
             _rawImage.rectTransform
                 .DOShakeAnchorPos(duration, strength, vibrato, randomness)

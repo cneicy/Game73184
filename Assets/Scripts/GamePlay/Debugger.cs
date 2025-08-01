@@ -9,7 +9,7 @@ namespace GamePlay
     {
         public void HitBoss()
         {
-            EventManager.Instance.TriggerEvent("AttackHero", new TowerAttack(DamageType.Normal, 1));
+            EventManager.Instance.TriggerEvent("AttackHero", new TowerAttack(DamageType.Normal, 20));
         }
         
     }
