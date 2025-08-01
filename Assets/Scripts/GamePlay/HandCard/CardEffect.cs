@@ -1,7 +1,5 @@
-using DG.Tweening;
 using UnityEngine;
 using Singleton;
-using UnityEngine.Serialization;
 
 namespace GamePlay.HandCard
 {
