@@ -12,7 +12,7 @@ namespace GamePlay.HandCard
         [SerializeField] private SplineContainer splineContainer;
         [SerializeField] private Transform spawnPoint;
         private List<GameObject> _handCards = new List<GameObject>();
-        private Vector3 _difPos = new Vector3(-6,-20,0);
+        private Vector3 _difPos = new Vector3(-6,-12,0);
 
         private void Update()
         {

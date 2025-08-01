@@ -128,7 +128,6 @@ namespace GamePlay
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (verboseDebug) Debug.Log("鼠标进入RawImage区域");
             _isPointerOverRawImage = true;
             _lastMousePosition = eventData.position;
             CheckHover(); // 立即检查悬停状态
@@ -136,7 +135,6 @@ namespace GamePlay
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (verboseDebug) Debug.Log("鼠标离开RawImage区域");
             _isPointerOverRawImage = false;
             
             // 处理离开悬停物体
@@ -218,7 +216,7 @@ namespace GamePlay
                 return null;
             }
         
-            if (verboseDebug) Debug.Log($"屏幕坐标: {screenPosition} -> 局部坐标: {localPoint}");
+            /*if (verboseDebug) Debug.Log($"屏幕坐标: {screenPosition} -> 局部坐标: {localPoint}");*/
 
             // 2. 计算归一化UV坐标（0-1范围）
             var rawImageRect = _rectTransform.rect;
@@ -227,7 +225,7 @@ namespace GamePlay
                 (localPoint.y - rawImageRect.y) / rawImageRect.height
             );
         
-            if (verboseDebug) Debug.Log($"RawImage矩形: {rawImageRect} -> 归一化坐标: {normalizedPoint}");
+            /*if (verboseDebug) Debug.Log($"RawImage矩形: {rawImageRect} -> 归一化坐标: {normalizedPoint}");*/
 
             // 3. 处理自定义UV区域
             if (_rawImage.uvRect != new Rect(0, 0, 1, 1))
