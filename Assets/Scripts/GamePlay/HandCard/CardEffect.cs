@@ -33,7 +33,6 @@ namespace GamePlay.HandCard
 
         public void CardFlip(bool flipped,Transform localTransform)
         {
-            print("旋转");
             Vector3 newVec3 = -localTransform.localRotation.eulerAngles+new Vector3(0f,180f,0f);
             localTransform.DORotate(newVec3, 0.25f);
         }

@@ -2,13 +2,13 @@
 using Event;
 using GamePlay.Objects.Heroes;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+//using UnityEngine.Rendering.PostProcessing;
 
 namespace Visual
 {
     public class HPtoScreenColor : MonoBehaviour
     {
-        private Hero _hero;
+        /*private Hero _hero;
         public PostProcessVolume postProcessVolume;
         private ColorGrading _colorGrading;
         private ChromaticAberration _chromaticAberration;
@@ -164,5 +164,7 @@ namespace Visual
             if (EventManager.Instance)
                 EventManager.Instance.UnregisterAllEventsForObject(this);
         }
+    }
+*/
     }
 }

@@ -27,13 +27,13 @@ namespace GamePlay
                 case BuiltState.Waiting:
                     foreach (var slot in map.allSlots)
                     {
-                        slot._isBuilding = false;
+                        slot.isBuilding = false;
                     }
                     break;
                 case BuiltState.Building:
                     foreach (var slot in map.allSlots)
                     {
-                        slot._isBuilding = true;
+                        slot.isBuilding = true;
                     }
                     break;
                 default:
