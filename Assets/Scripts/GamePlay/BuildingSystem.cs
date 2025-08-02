@@ -15,7 +15,7 @@ namespace GamePlay
 
         public BuiltState state;
         [SerializeField] private Map map;
-        public Card NowCard { get; set; }
+        public Card NowCard;
         
         private void Start()
         {

@@ -24,12 +24,20 @@ namespace GamePlay.HandCard
         {
             if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
             {
-                StartCoroutine(DrawAllCard());
+                /*StartCoroutine(DrawAllCard());*/
             }
         }
 
+        public void StartCardAnimation()
+        {
+            print("卡牌动画");
+            StartCoroutine(DrawAllCard());
+        }
+        
         private IEnumerator DrawAllCard()
         {
+            print("开始动画协程");
+            
             _isDrawing = true;
             
             // 计算需要补充的卡牌数量

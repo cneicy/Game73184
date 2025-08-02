@@ -1,12 +1,12 @@
 ﻿using DG.Tweening;
 using Event;
+using GamePlay;
 using UnityEngine;
 using UnityEngine.UI;
 using Singleton;
-
 namespace Visual
 {
-    public class TVPowerController1 : Singleton<TVPowerController1>
+    public class TVPowerController : Singleton<TVPowerController>
     {
         private static readonly int IsTurningOn = Shader.PropertyToID("_IsTurningOn");
         private static readonly int TransitionProgress = Shader.PropertyToID("_TransitionProgress");
@@ -14,7 +14,7 @@ namespace Visual
         private static readonly int Opacity = Shader.PropertyToID("_Opacity");
         private static readonly int PulseIntensity = Shader.PropertyToID("_PulseIntensity");
         private static readonly int PulseWidth = Shader.PropertyToID("_PulseWidth");
-        private Tweener _shakeTween;
+        
         public RawImage rawImage;
         public float transitionDuration = 0.3f;
         public float pulseIntensity = 5f;
@@ -38,11 +38,6 @@ namespace Visual
         
         private void Start()
         {
-            FirstStart();
-        }
-
-        public object FirstStart(string anyway ="")
-        {
             if (!rawImage.material)
             {
                 rawImage.material = new Material(Shader.Find("Unlit/SnowNoiseShader"));
@@ -58,7 +53,6 @@ namespace Visual
             _material.SetFloat(PulseWidth, pulseWidth);
 
             rawImage.color = new Color(1, 1, 1, 1);
-            return null;
         }
         
         [EventSubscribe("PowerButtonClick")]
@@ -82,7 +76,7 @@ namespace Visual
         {
             var turnOffSequence = DOTween.Sequence();
             
-            //turnOffSequence.AppendCallback(() => Shake());
+            turnOffSequence.AppendCallback(() => Shake());
             
             turnOffSequence.AppendCallback(() =>
             {
@@ -112,7 +106,7 @@ namespace Visual
             turnOnSequence.AppendCallback(() => { rawImage.DOFade(onOpacity, 0.2f).SetEase(Ease.InOutQuad); });
             turnOnSequence.AppendInterval(0.2f);
 
-            //turnOnSequence.AppendCallback(() => Shake());
+            turnOnSequence.AppendCallback(() => Shake());
 
             turnOnSequence.AppendCallback(() =>
             {
@@ -135,6 +129,7 @@ namespace Visual
             });
             
             turnOnSequence.Play();
+            StoreSystem.Instance.cardCurve.StartCardAnimation();
         }
 
         private void Flash(float duration = 0.5f, int flashes = 3)
@@ -163,9 +158,7 @@ namespace Visual
 
         private void Shake(float strength = 10f, float duration = 0.3f)
         {
-            _shakeTween?.Kill();
-    
-            _shakeTween = rawImage.rectTransform
+            rawImage.rectTransform
                 .DOShakeAnchorPos(duration, strength, 20, 90, false, true)
                 .SetEase(Ease.OutQuad);
         }
