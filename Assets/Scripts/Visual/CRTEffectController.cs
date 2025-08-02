@@ -30,7 +30,6 @@ namespace Visual
         public float overlayOpacity = 0.7f; // 蒙版透明度
         
         private Material _material;
-        private bool _isOn = true;
 
         
 

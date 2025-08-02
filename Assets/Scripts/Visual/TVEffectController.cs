@@ -23,6 +23,18 @@ namespace Visual
         private Material _material;
         private bool _isOn = true;
 
+        private void OnEnable()
+        {
+            if (EventManager.Instance)
+                EventManager.Instance.RegisterEventHandlersFromAttributes(this);
+        }
+
+        private void OnDisable()
+        {
+            if (EventManager.Instance)
+                EventManager.Instance.UnregisterAllEventsForObject(this);
+        }
+        
         private void Start()
         {
             if (!rawImage.material)
@@ -42,7 +54,8 @@ namespace Visual
             rawImage.color = new Color(1, 1, 1, 1);
         }
         
-        public void TogglePower()
+        [EventSubscribe("PowerButtonClick")]
+        public object TogglePower(string anyway)
         {
             if (_isOn)
             {
@@ -51,10 +64,11 @@ namespace Visual
             else
             {
                 TurnOnTV();
-                EventManager.Instance.TriggerEvent("GameStart","114514");
+                EventManager.Instance.TriggerEvent("PowerOn","114514");
             }
 
             _isOn = !_isOn;
+            return "114514";
         }
 
         private void TurnOffTV()

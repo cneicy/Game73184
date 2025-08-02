@@ -93,7 +93,7 @@ namespace GamePlay
                 EventManager.Instance.UnregisterAllEventsForObject(this);
         }
         
-        [EventSubscribe("GameStart")]
+        [EventSubscribe("PowerOn")]
         public object GameStart(string anyway)
         {
             _size = new Vector2Int(_schema.GetLength(2), _schema.GetLength(1));
