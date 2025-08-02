@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Event;
 
 namespace GamePlay
 {
@@ -78,8 +79,22 @@ namespace GamePlay
         };
 
         private Vector2Int _size;
+        
 
-        private void Awake()
+        private void OnEnable()
+        {
+            if(EventManager.Instance)
+                EventManager.Instance.RegisterEventHandlersFromAttributes(this);
+        }
+
+        private void OnDisable()
+        {
+            if(EventManager.Instance)
+                EventManager.Instance.UnregisterAllEventsForObject(this);
+        }
+        
+        [EventSubscribe("GameStart")]
+        public object GameStart(string anyway)
         {
             _size = new Vector2Int(_schema.GetLength(2), _schema.GetLength(1));
 
@@ -88,6 +103,7 @@ namespace GamePlay
 
             MapSchema = new GameObject[_size.x, _size.y];
             GenerateMap();
+            return null;
         }
 
         public void SwitchMap()

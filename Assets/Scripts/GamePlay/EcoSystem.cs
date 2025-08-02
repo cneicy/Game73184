@@ -2,13 +2,12 @@
 using Event;
 using GamePlay.Objects;
 using Singleton;
-using UnityEngine;
 
 namespace GamePlay
 {
     public class EcoSystem : Singleton<EcoSystem>
     {
-        public float Money { get; set; }
+        public int Money { get; set; }
         public Dictionary<TowerType,int> TowerPriceIndex { get; set; }
 
         private void OnEnable()
@@ -24,7 +23,7 @@ namespace GamePlay
         }
 
         [EventSubscribe("Harvest")]
-        public object OnHarvest(float harvestMoney)
+        public object OnHarvest(int harvestMoney)
         {
             Money += harvestMoney;
             return harvestMoney;

@@ -115,9 +115,9 @@ namespace Visual
         }
 
         [EventSubscribe("Harvest")]
-        public object UpdateColorGrading(float finalDamage)
+        public object UpdateColorGrading(int finalDamage)
         {
-            var healthPercent = _hero.Health / Hero.MaxHealth;
+            var healthPercent = _hero.Health / (float)Hero.MaxHealth;
             var factor = 1 - healthPercent;
 
             var curveValue = hueShiftCurve.Evaluate(factor);

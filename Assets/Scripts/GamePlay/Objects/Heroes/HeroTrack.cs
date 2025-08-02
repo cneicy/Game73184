@@ -7,16 +7,14 @@ namespace GamePlay.Objects.Heroes
 {
     public class HeroTrack : MonoBehaviour
     {
-        public Map map;
+        private Map _map;
+        private SpriteRenderer _spriteRenderer;
+        private Animator _animator;
+        
         public float moveSpeed;
-
         private List<Vector2> _pathPoints;
         private int _currentTargetIndex;
         private bool _isMoving;
-        private SpriteRenderer _spriteRenderer;
-
-        private Animator _animator;
-
         //private SquashWalkAnimation  _walkSequence;
         private static readonly int DirX = Animator.StringToHash("DirX");
         private static readonly int DirY = Animator.StringToHash("DirY");
@@ -42,8 +40,8 @@ namespace GamePlay.Objects.Heroes
 
         private void Start()
         {
-            map = FindFirstObjectByType<Map>();
-            if (!map)
+            _map = FindFirstObjectByType<Map>();
+            if (!_map)
             {
                 Debug.LogError("Map引用未设置");
                 return;
@@ -64,13 +62,18 @@ namespace GamePlay.Objects.Heroes
                 Debug.LogError("Animator组件未找到");
                 return;
             }
-
-            LoadPath();
         }
 
+        [EventSubscribe("GameStart")]
+        public object GameStart(string anyway)
+        {
+            Invoke(nameof(LoadPath),0.4f);
+            return null;
+        }
+        
         public void LoadPath()
         {
-            _pathPoints = map.GetRoadPathPoints();
+            _pathPoints = _map.GetRoadPathPoints();
 
             if (_pathPoints.Count > 0)
             {
