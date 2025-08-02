@@ -7,7 +7,7 @@ namespace GamePlay.Objects.Heroes
 {
     public class Hero : MonoBehaviour, IInteractable
     {
-        public static readonly int MaxHealth = 200;
+        public static readonly int MaxHealth = 200000;
         [SerializeField] private ParticleSystem particles;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private int health;
@@ -75,6 +75,7 @@ namespace GamePlay.Objects.Heroes
                     StartCoroutine(ColorChange());
                     EventManager.Instance.TriggerEvent("Harvest", finalDamage);
                     CheckHealth();
+                    DamageType = DamageType.AP;
                     return finalDamage;
                 }
                 case DamageType.Clear:
@@ -86,22 +87,40 @@ namespace GamePlay.Objects.Heroes
                     StartCoroutine(ColorChange());
                     EventManager.Instance.TriggerEvent("Harvest", finalDamage);
                     CheckHealth();
+                    DamageType = DamageType.Clear;
                     return finalDamage;
                 }
                 case DamageType.Normal:
                 {
                     dRPer += health / (float)MaxHealth * 0.1f;
-                    if (!(towerAttack.Damage > 2.5f * (health / (float)MaxHealth))) return MaxHealth;
-                    var finalDamage = (int)(dRPer * towerAttack.Damage);
+                    if (dRPer >= 1)
+                    {
+                        dRPer = 1;
+                        return 0;
+                    }
+
+                    DamageType = DamageType.Normal;
+                    if (towerAttack.Damage > 2.5f * (health / (float)MaxHealth))
+                    {
+                        var finalDamage = (int)((1 - dRPer) * towerAttack.Damage);
+                        Debug.Log("最终伤害："+finalDamage);
+                        particles.Play();
+                        health -= finalDamage;
+                        StartCoroutine(ColorChange());
+                        EventManager.Instance.TriggerEvent("Harvest", finalDamage);
+                        CheckHealth();
+                        return finalDamage;
+                    }
+                    
                     particles.Play();
-                    health -= finalDamage;
+                    health -= towerAttack.Damage;
                     StartCoroutine(ColorChange());
-                    EventManager.Instance.TriggerEvent("Harvest", finalDamage);
+                    EventManager.Instance.TriggerEvent("Harvest", towerAttack.Damage);
                     CheckHealth();
-                    return finalDamage;
+                    return towerAttack.Damage;
                 }
                 default:
-                    return MaxHealth;
+                    return -1;
             }
         }
 

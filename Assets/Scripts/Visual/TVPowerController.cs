@@ -2,10 +2,11 @@
 using Event;
 using UnityEngine;
 using UnityEngine.UI;
+using Singleton;
 
 namespace Visual
 {
-    public class TVPowerController : MonoBehaviour
+    public class TVPowerController : Singleton<TVPowerController>
     {
         private static readonly int IsTurningOn = Shader.PropertyToID("_IsTurningOn");
         private static readonly int TransitionProgress = Shader.PropertyToID("_TransitionProgress");
@@ -37,6 +38,11 @@ namespace Visual
         
         private void Start()
         {
+            FirstStart();
+        }
+
+        public object FirstStart(string anyway ="")
+        {
             if (!rawImage.material)
             {
                 rawImage.material = new Material(Shader.Find("Unlit/SnowNoiseShader"));
@@ -52,6 +58,7 @@ namespace Visual
             _material.SetFloat(PulseWidth, pulseWidth);
 
             rawImage.color = new Color(1, 1, 1, 1);
+            return null;
         }
         
         [EventSubscribe("PowerButtonClick")]
@@ -71,7 +78,7 @@ namespace Visual
             return "114514";
         }
 
-        private void TurnOffTV()
+        public void TurnOffTV()
         {
             var turnOffSequence = DOTween.Sequence();
             
@@ -98,7 +105,7 @@ namespace Visual
             turnOffSequence.Play();
         }
 
-        private void TurnOnTV()
+        public void TurnOnTV()
         {
             var turnOnSequence = DOTween.Sequence();
 

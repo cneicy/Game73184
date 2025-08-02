@@ -4,18 +4,34 @@ namespace Menu.Credit
 {
     public class TextScroll : MonoBehaviour
     {
-        private Vector2 _temp;
-        [SerializeField]
-        private float scrollSpeed;
-        private void Start()
+        [SerializeField] private float scrollSpeed;
+        [SerializeField] private Transform top;
+        [SerializeField] private Transform bottom;
+        [SerializeField] private Transform[] text;
+
+        public float ScrollSpeed
         {
-            _temp = transform.position;
+            get => scrollSpeed;
+            set => scrollSpeed = value;
         }
 
         private void Update()
         {
-            _temp.y += scrollSpeed * Time.deltaTime;
-            transform.position = _temp;
+            foreach (var variable in text)
+            {
+                var temp = variable.localPosition;
+                temp.y += scrollSpeed * Time.deltaTime;
+                if (temp.y > top.localPosition.y || temp.y < bottom.localPosition.y)
+                {
+                    variable.gameObject.SetActive(false);
+                }
+                else
+                {
+                    variable.gameObject.SetActive(true);
+                }
+
+                variable.localPosition = temp;
+            }
         }
     }
 }
