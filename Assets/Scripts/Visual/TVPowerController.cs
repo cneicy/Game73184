@@ -14,7 +14,7 @@ namespace Visual
         private static readonly int Opacity = Shader.PropertyToID("_Opacity");
         private static readonly int PulseIntensity = Shader.PropertyToID("_PulseIntensity");
         private static readonly int PulseWidth = Shader.PropertyToID("_PulseWidth");
-        
+        private Tweener _shakeTween;
         public RawImage rawImage;
         public float transitionDuration = 0.3f;
         public float pulseIntensity = 5f;
@@ -82,7 +82,7 @@ namespace Visual
         {
             var turnOffSequence = DOTween.Sequence();
             
-            turnOffSequence.AppendCallback(() => Shake());
+            //turnOffSequence.AppendCallback(() => Shake());
             
             turnOffSequence.AppendCallback(() =>
             {
@@ -112,7 +112,7 @@ namespace Visual
             turnOnSequence.AppendCallback(() => { rawImage.DOFade(onOpacity, 0.2f).SetEase(Ease.InOutQuad); });
             turnOnSequence.AppendInterval(0.2f);
 
-            turnOnSequence.AppendCallback(() => Shake());
+            //turnOnSequence.AppendCallback(() => Shake());
 
             turnOnSequence.AppendCallback(() =>
             {
@@ -163,7 +163,9 @@ namespace Visual
 
         private void Shake(float strength = 10f, float duration = 0.3f)
         {
-            rawImage.rectTransform
+            _shakeTween?.Kill();
+    
+            _shakeTween = rawImage.rectTransform
                 .DOShakeAnchorPos(duration, strength, 20, 90, false, true)
                 .SetEase(Ease.OutQuad);
         }

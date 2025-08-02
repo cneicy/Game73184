@@ -352,6 +352,11 @@ namespace GamePlay
             foreach (var go in MapSchema)
                 if (go)
                     DestroyImmediate(go);
+            foreach (var go in allSlots.Where(go => go))
+            {
+                DestroyImmediate(go.gameObject);
+            }
+            allSlots.Clear();
         }
 
         public void SwitchToMap(int mapIndex)

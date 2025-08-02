@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Event;
+using UnityEngine;
 using Visual;
 
 namespace Menu.Credit
@@ -11,6 +12,7 @@ namespace Menu.Credit
         public void OpenCredit()
         {
             TVPowerController.Instance.TurnOffTV();
+            EventManager.Instance.TriggerEvent("OpenCredit","");
             textScroll.gameObject.SetActive(true);
         }
 
