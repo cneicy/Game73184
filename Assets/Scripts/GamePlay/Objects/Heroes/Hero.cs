@@ -65,52 +65,44 @@ namespace GamePlay.Objects.Heroes
         [EventSubscribe("AttackHero")]
         public object OnGetHurt(TowerAttack towerAttack)
         {
-            if (towerAttack.DamageType == DamageType.AP)
+            switch (towerAttack.DamageType)
             {
-                var finalDamage = towerAttack.Damage;
-                particles.Play();
-                Health -= finalDamage;
-                StartCoroutine(ColorChange());
-                EventManager.Instance.TriggerEvent("Harvest", finalDamage);
-                CheckHealth();
-                return finalDamage;
-            }
-
-            if (towerAttack.DamageType == DamageType.Clear)
-            {
-                dRPer = 0;
-                var finalDamage = towerAttack.Damage;
-                particles.Play();
-                Health -= finalDamage;
-                StartCoroutine(ColorChange());
-                EventManager.Instance.TriggerEvent("Harvest", finalDamage);
-                CheckHealth();
-                return finalDamage;
-            }
-
-            if(towerAttack.DamageType == DamageType.Normal)
-            {
-                if (dRPer == 0)
+                case DamageType.AP:
                 {
-                    dRPer += towerAttack.Damage/(float)MaxHealth * 0.1f;
-                    health -= towerAttack.Damage;
-                    EventManager.Instance.TriggerEvent("Harvest", towerAttack.Damage);
-                    return towerAttack.Damage;
+                    var finalDamage = towerAttack.Damage;
+                    particles.Play();
+                    Health -= finalDamage;
+                    StartCoroutine(ColorChange());
+                    EventManager.Instance.TriggerEvent("Harvest", finalDamage);
+                    CheckHealth();
+                    return finalDamage;
                 }
-                else
+                case DamageType.Clear:
                 {
-                    dRPer += towerAttack.Damage/(float)MaxHealth *dRPer * 0.1f;
+                    dRPer = 0;
+                    var finalDamage = towerAttack.Damage;
+                    particles.Play();
+                    Health -= finalDamage;
+                    StartCoroutine(ColorChange());
+                    EventManager.Instance.TriggerEvent("Harvest", finalDamage);
+                    CheckHealth();
+                    return finalDamage;
                 }
-
-                if (towerAttack.Damage == 0)
+                case DamageType.Normal:
                 {
-                    health -= towerAttack.Damage;
-                    EventManager.Instance.TriggerEvent("Harvest", towerAttack.Damage);
-                    return towerAttack.Damage;
+                    dRPer += health / (float)MaxHealth * 0.1f;
+                    if (!(towerAttack.Damage > 2.5f * (health / (float)MaxHealth))) return MaxHealth;
+                    var finalDamage = (int)(dRPer * towerAttack.Damage);
+                    particles.Play();
+                    health -= finalDamage;
+                    StartCoroutine(ColorChange());
+                    EventManager.Instance.TriggerEvent("Harvest", finalDamage);
+                    CheckHealth();
+                    return finalDamage;
                 }
+                default:
+                    return MaxHealth;
             }
-
-            return MaxHealth;
         }
 
         public void CheckHealth()
