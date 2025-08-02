@@ -10,10 +10,12 @@ namespace GamePlay.HandCard
         private Transform _localTransform;
         private SpriteRenderer _spriteRenderer;
         private bool _isSelected;
+        public bool isFlipped;
         [SerializeField] private GameObject shadowTowerObj;
 
         private void Start()
         {
+            isFlipped = false;
             _isSelected = false;
             _cardLocalPosition = transform.localPosition;
             _localTransform = transform;
@@ -30,6 +32,11 @@ namespace GamePlay.HandCard
             CardEffect.Instance.MouseExit(_cardLocalPosition,_localTransform,_spriteRenderer);
         }
 
+        public void AfterBuilt()
+        {
+            CardEffect.Instance.CardFlip(isFlipped,_localTransform);
+        }
+        
         private void BuildTower()
         {
             
@@ -47,6 +54,7 @@ namespace GamePlay.HandCard
             {
                 _cardLocalPosition = transform.localPosition;
                 CardEffect.Instance.MouseExit(_cardLocalPosition,_localTransform,_spriteRenderer);
+                AfterBuilt();
                 _isSelected = false;
             }
         }

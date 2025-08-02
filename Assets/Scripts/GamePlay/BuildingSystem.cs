@@ -12,7 +12,7 @@ namespace GamePlay
             Building,
         }
 
-        public BuiltState state = BuiltState.Waiting;
+        public BuiltState state;
         [SerializeField] private Map map;
         
         private void Start()
@@ -38,6 +38,17 @@ namespace GamePlay
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void CancelBuilding()
+        {
+            if (state == BuiltState.Building)
+            {
+                if (UnityEngine.Input.GetMouseButtonDown(2))
+                {
+                    state = BuiltState.Waiting;
+                }
             }
         }
     }

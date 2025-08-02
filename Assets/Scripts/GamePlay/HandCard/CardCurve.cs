@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -11,17 +12,35 @@ namespace GamePlay.HandCard
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private SplineContainer splineContainer;
         [SerializeField] private Transform spawnPoint;
+        private List<Card> _cards = new List<Card>();
         private List<GameObject> _handCards = new List<GameObject>();
         private Vector3 _difPos = new Vector3(-6,-12,0);
+        private bool _isDrawing = false;
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.A))
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
             {
-                DrawCard();
+                StartCoroutine(DrawAllCard());
             }
         }
 
+        private IEnumerator DrawAllCard()
+        {
+            _isDrawing = true;
+            
+            // 计算需要补充的卡牌数量
+            int cardsToDraw = maxHandSize - _handCards.Count;
+            
+            for (int i = 0; i < cardsToDraw; i++)
+            {
+                DrawCard();
+                yield return new WaitForSeconds(0.25f); // 等待间隔
+            }
+            
+            _isDrawing = false;
+        }
+        
         private void DrawCard()
         {
             if(_handCards.Count>=maxHandSize) return;
