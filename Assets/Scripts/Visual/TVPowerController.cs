@@ -6,7 +6,7 @@ using Singleton;
 
 namespace Visual
 {
-    public class TVPowerController1 : Singleton<TVPowerController1>
+    public class TVPowerController : Singleton<TVPowerController>
     {
         private static readonly int IsTurningOn = Shader.PropertyToID("_IsTurningOn");
         private static readonly int TransitionProgress = Shader.PropertyToID("_TransitionProgress");
@@ -20,7 +20,7 @@ namespace Visual
         public float pulseIntensity = 5f;
         public float pulseWidth = 0.01f;
         public float onOpacity = 0.03f;
-
+        public GameObject star;
         private Material _material;
         private bool _isOn = true;
 
@@ -62,15 +62,17 @@ namespace Visual
         }
         
         [EventSubscribe("PowerButtonClick")]
-        public object TogglePower(string anyway)
+        public object TogglePower(string anyway = "")
         {
             if (_isOn)
             {
                 TurnOffTV();
+                star.SetActive(false);
             }
             else
             {
                 TurnOnTV();
+                star.SetActive(true);
                 EventManager.Instance.TriggerEvent("PowerOn","114514");
             }
 
@@ -78,7 +80,8 @@ namespace Visual
             return "114514";
         }
 
-        public void TurnOffTV()
+        [EventSubscribe("GameOver")]
+        public object TurnOffTV(string anyway = "")
         {
             var turnOffSequence = DOTween.Sequence();
             
@@ -103,6 +106,7 @@ namespace Visual
             });
 
             turnOffSequence.Play();
+            return null;
         }
 
         public void TurnOnTV()

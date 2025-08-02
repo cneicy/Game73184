@@ -105,7 +105,8 @@ namespace GamePlay
 
             Region = new Slot[_size.x,_size.y];
             MapSchema = new GameObject[_size.x, _size.y];
-            GenerateMap();
+            var rand = Random.Range(0, _schema.GetLength(0));
+            SwitchToMap(rand);
             return null;
         }
 
@@ -349,10 +350,11 @@ namespace GamePlay
                 }
             }
         }
-
-        private void ClearMap()
+        
+        [EventSubscribe("GameOver")]
+        public object ClearMap(string anyway = "")
         {
-            if (MapSchema == null) return;
+            if (MapSchema == null) return null;
 
             foreach (var go in MapSchema)
                 if (go)
@@ -362,6 +364,7 @@ namespace GamePlay
                 DestroyImmediate(go.gameObject);
             }
             allSlots.Clear();
+            return null;
         }
 
         public void SwitchToMap(int mapIndex)
