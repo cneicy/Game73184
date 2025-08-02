@@ -8,16 +8,14 @@ using UnityEngine.Splines;
 
 namespace GamePlay.HandCard
 {
+    
     public class CardCurve : MonoBehaviour
     {
         [SerializeField] private int maxHandSize;
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private SplineContainer splineContainer;
         [SerializeField] private Transform spawnPoint;
-        private List<Card> _cardsList = new List<Card>();
-        [Header("玩家现有牌")]
-        public List<CardData> playerCardDataList = new List<CardData>();
-        
+        [SerializeField] private List<Card> cardsList = new List<Card>();
         private List<GameObject> _handCards = new List<GameObject>();
         private Vector3 _difPos = new Vector3(-6,-12,0);
         private bool _isDrawing = false;
@@ -35,24 +33,21 @@ namespace GamePlay.HandCard
             _isDrawing = true;
             
             // 计算需要补充的卡牌数量
-            int cardsToDraw = playerCardDataList.Count;
+            int cardsToDraw = cardsList.Count;
             
             for (int i = 0; i < cardsToDraw; i++)
             {
-                DrawCard(i);
+                DrawCard();
                 yield return new WaitForSeconds(0.25f); // 等待间隔
             }
             
             _isDrawing = false;
         }
         
-        private void DrawCard(int index)
+        private void DrawCard()
         {
             if(_handCards.Count>=maxHandSize) return;
             GameObject g = Instantiate(cardPrefab,spawnPoint.localPosition,spawnPoint.localRotation);
-            Card gCard = g.GetComponent<Card>();
-            gCard.UpdateCardData(playerCardDataList[index]);
-            _cardsList.Add(gCard);
             _handCards.Add(g);
             UpdateCardPositions();
         }
@@ -60,7 +55,7 @@ namespace GamePlay.HandCard
         private void UpdateCardPositions()
         {
             if (_handCards.Count == 0)  return;
-            float cardSpacing = 1f / (maxHandSize+5);
+            float cardSpacing = 1f / (maxHandSize+2);
             float firstCardPosition = 0.5f-(_handCards.Count-1)*cardSpacing/2;
             Spline spline = splineContainer.Spline;
             for (int i = 0; i < _handCards.Count; i++)
@@ -73,18 +68,16 @@ namespace GamePlay.HandCard
                 _handCards[i].transform.DOMove(splinePosition+_difPos, 0.25f);
                 _handCards[i].transform.DORotateQuaternion(rotation, 0.25f);
             }
+            UpdateCardData();
         }
 
-        public void BuyNewCard(TowerType towerType,int cost,GameObject towerPrefab,bool canBuildOnRoad,Sprite cardFace,Sprite cardBack)
+        private void UpdateCardData()
         {
-            CardData cardData = new CardData();
-            cardData.towerType = towerType;
-            cardData.cost = cost;
-            cardData.towerPrefab = towerPrefab;
-            cardData.canBuildOnRoad = canBuildOnRoad;
-            cardData.cardFace = cardFace;
-            cardData.cardBack = cardBack;
-            playerCardDataList.Add(cardData);
+            for (int i = 0; i < _handCards.Count; i++)
+            {
+                _handCards[i].GetComponent<Card>().UpdateCardData(cardsList[i]);
+            }
         }
+        
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GamePlay.Objects.Towers
 {
@@ -10,5 +11,6 @@ namespace GamePlay.Objects.Towers
         public bool[] canBuildOnRoad;
         public Sprite[] cardFace;
         public Sprite[] cardBack;
+        public int[] chargingIndex;
     }
 }

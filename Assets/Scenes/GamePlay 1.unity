@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &92843320
 RectTransform:
   m_ObjectHideFlags: 0
@@ -153,13 +153,18 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1269780930}
+  - {fileID: 569530950}
+  - {fileID: 1803677161}
+  - {fileID: 690603011}
+  - {fileID: 1475848195}
   m_Father: {fileID: 1013341361}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0001, y: 46.432373}
-  m_SizeDelta: {x: 1606.0978, y: 925.6522}
+  m_AnchoredPosition: {x: -761, y: -388}
+  m_SizeDelta: {x: 78.2256, y: 32.8956}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &92843321
 MonoBehaviour:
@@ -214,11 +219,11 @@ MonoBehaviour:
   cardTowerType: 0000000001000000020000000300000004000000
   cost: 0100000002000000030000000400000005000000
   targetTower:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 6040423129606557633, guid: f18989641a9039e439a1dbde3af7db67, type: 3}
+  - {fileID: 6040423129606557633, guid: f18989641a9039e439a1dbde3af7db67, type: 3}
+  - {fileID: 6040423129606557633, guid: f18989641a9039e439a1dbde3af7db67, type: 3}
+  - {fileID: 6040423129606557633, guid: f18989641a9039e439a1dbde3af7db67, type: 3}
+  - {fileID: 6040423129606557633, guid: f18989641a9039e439a1dbde3af7db67, type: 3}
   canBuildOnRoad: 0000010101
   cardFace:
   - {fileID: 1241273606, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
@@ -232,6 +237,7 @@ MonoBehaviour:
   - {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
   - {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
   - {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  chargingIndex: 0100000001000000010000000100000001000000
 --- !u!114 &92843324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b637b5f05e77afd4698d2e7b1c604f0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buildTowerData: {fileID: 0}
+  cardCurve: {fileID: 1777216763}
 --- !u!1 &326123504
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,10 +466,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1013341361}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 60}
-  m_SizeDelta: {x: -960.3062, y: -390.2415}
+  m_SizeDelta: {x: 959.6938, y: 689.75854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &450179609
 MonoBehaviour:
@@ -948,6 +956,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingSystem: {fileID: 2031170457}
+--- !u!1 &569530949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 569530950}
+  - component: {fileID: 569530951}
+  m_Layer: 5
+  m_Name: Card1 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &569530950
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569530949}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 92843320}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &569530951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569530949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd504f4c1e679e4ea22b87e0fbecd28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardLocalPosition: {x: 0, y: 0, z: 0}
+  isFlipped: 0
+  shadowTowerObj: {fileID: 4424409528615533993, guid: 87b42e61d825b75428b6782329f783c1, type: 3}
+  TowerType: 0
+  Cost: 2
+  TowerPrefab: {fileID: 4424409528615533993, guid: bd5a2ab70c4092c4ea11e44b49349fe5, type: 3}
+  CanBuildOnRoad: 0
+  CardFace: {fileID: 1311363702, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
+  CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  ChargingIndex: 2
 --- !u!1 &634627441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,8 +1092,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a414c9ca4644e578b5cbf4ccdc1dac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1443612906}
   moveSpeed: 1
+--- !u!1 &690603010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 690603011}
+  - component: {fileID: 690603012}
+  m_Layer: 5
+  m_Name: Card1 (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &690603011
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690603010}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 92843320}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &690603012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690603010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd504f4c1e679e4ea22b87e0fbecd28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardLocalPosition: {x: 0, y: 0, z: 0}
+  isFlipped: 0
+  shadowTowerObj: {fileID: 4424409528615533993, guid: 87b42e61d825b75428b6782329f783c1, type: 3}
+  TowerType: 0
+  Cost: 0
+  TowerPrefab: {fileID: 4424409528615533993, guid: 061bebd46cd05ff498d1f87da15c2a17, type: 3}
+  CanBuildOnRoad: 0
+  CardFace: {fileID: -1226726504, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
+  CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  ChargingIndex: 1
 --- !u!1 &713715817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1418,10 +1541,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1196842065}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -950}
-  m_SizeDelta: {x: -960.3062, y: -390.2415}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -968}
+  m_SizeDelta: {x: 959.6938, y: 689.75854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &916364918
 MonoBehaviour:
@@ -2118,6 +2241,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75222534b5f54fe6870669b8c5b23308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageType: 0
+  damageAmount: 0
+--- !u!1 &1269780929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1269780930}
+  - component: {fileID: 1269780931}
+  m_Layer: 5
+  m_Name: Card1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1269780930
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269780929}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 92843320}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1269780931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269780929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd504f4c1e679e4ea22b87e0fbecd28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardLocalPosition: {x: 0, y: 0, z: 0}
+  isFlipped: 0
+  shadowTowerObj: {fileID: 4424409528615533993, guid: 87b42e61d825b75428b6782329f783c1, type: 3}
+  TowerType: 0
+  Cost: 1
+  TowerPrefab: {fileID: 4424409528615533993, guid: 51d8073c83e21874d94249df078a0674, type: 3}
+  CanBuildOnRoad: 0
+  CardFace: {fileID: 1241273606, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
+  CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  ChargingIndex: 1
 --- !u!1 &1443612904
 GameObject:
   m_ObjectHideFlags: 0
@@ -2173,6 +2356,64 @@ MonoBehaviour:
   bfsPath: []
   optimizedPath: []
   allSlots: []
+--- !u!1 &1475848194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1475848195}
+  - component: {fileID: 1475848196}
+  m_Layer: 5
+  m_Name: Card1 (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1475848195
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475848194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 92843320}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1475848196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475848194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd504f4c1e679e4ea22b87e0fbecd28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardLocalPosition: {x: 0, y: 0, z: 0}
+  isFlipped: 0
+  shadowTowerObj: {fileID: 4424409528615533993, guid: 87b42e61d825b75428b6782329f783c1, type: 3}
+  TowerType: 0
+  Cost: 0
+  TowerPrefab: {fileID: 4424409528615533993, guid: ee2ff3f12ac4f2d4ebfe31bde191671b, type: 3}
+  CanBuildOnRoad: 0
+  CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
+  CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  ChargingIndex: 1
 --- !u!1001 &1510966115
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2547,16 +2788,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac5799b90816845408873a7c488d3791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHandSize: 5
+  maxHandSize: 10
   cardPrefab: {fileID: 1345639281155978355, guid: 080277bdd566b6b4fb7d969ce1450797, type: 3}
   splineContainer: {fileID: 326123506}
   spawnPoint: {fileID: 941812097}
-  playerCardDataList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  cardsList:
+  - {fileID: 1269780931}
+  - {fileID: 569530951}
+  - {fileID: 1803677162}
+  - {fileID: 690603012}
+  - {fileID: 1475848196}
+--- !u!1 &1803677160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1803677161}
+  - component: {fileID: 1803677162}
+  m_Layer: 5
+  m_Name: Card1 (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1803677161
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803677160}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 92843320}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1803677162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803677160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd504f4c1e679e4ea22b87e0fbecd28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardLocalPosition: {x: 0, y: 0, z: 0}
+  isFlipped: 0
+  shadowTowerObj: {fileID: 4424409528615533993, guid: 87b42e61d825b75428b6782329f783c1, type: 3}
+  TowerType: 0
+  Cost: 3
+  TowerPrefab: {fileID: 4424409528615533993, guid: 299701d40818c074484a1eeb47ce1d06, type: 3}
+  CanBuildOnRoad: 0
+  CardFace: {fileID: 1618707750, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
+  CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  ChargingIndex: 1
 --- !u!1 &2031170455
 GameObject:
   m_ObjectHideFlags: 0

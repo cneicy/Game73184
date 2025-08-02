@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace GamePlay
@@ -11,6 +12,7 @@ namespace GamePlay
         public bool IsOccupied => placedUnit != null; // 是否已被占用
         public bool isBuilding;
         [SerializeField] private GameObject towerGameObject;
+        [SerializeField] private GameObject shadowGameObject;
     
         // 放置单位到slot
         public bool PlaceUnit(GameObject unit)
@@ -23,7 +25,17 @@ namespace GamePlay
         
             return true;
         }
-    
+
+        private void Update()
+        {
+            if (BuildingSystem.Instance.state == BuildingSystem.BuiltState.Building)
+            {
+                shadowGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;
+                Color alpha = shadowGameObject.GetComponent<SpriteRenderer>().color;
+                shadowGameObject.GetComponent<SpriteRenderer>().color = new Color(alpha.r, alpha.g, alpha.b, 0.65f);
+            }
+        }
+
         // 从slot移除单位
         public bool RemoveUnit()
         {
@@ -38,7 +50,6 @@ namespace GamePlay
         {
             if (isBuilding)
             {
-                print("该地块位于"+transform.position);
                 Instantiate(towerGameObject,transform.position,transform.localRotation,transform);
             }
             print("建造");
@@ -46,6 +57,10 @@ namespace GamePlay
 
         public void OnHoverEnter()
         {
+            if (isBuilding)
+            { 
+                Instantiate(shadowGameObject,transform.position,transform.localRotation,transform);
+            }
             print("鼠标进入地块");
         }
 

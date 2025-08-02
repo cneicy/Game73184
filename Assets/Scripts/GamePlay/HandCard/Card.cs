@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 namespace GamePlay.HandCard
 {
     
+    
+    
     public class Card : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler,IInteractable,IHoverable
     {
         [SerializeField]private Vector3 _cardLocalPosition;
@@ -14,8 +16,15 @@ namespace GamePlay.HandCard
         private bool _isSelected;
         public bool isFlipped;
         [SerializeField] private GameObject shadowTowerObj;
-        public CardData myCardData;
 
+        public TowerType TowerType;
+        public int Cost;
+        public GameObject TowerPrefab;
+        public bool CanBuildOnRoad;
+        public Sprite CardFace;
+        public Sprite CardBack;
+        public int ChargingIndex;
+        
         private void Start()
         {
             isFlipped = false;
@@ -25,14 +34,14 @@ namespace GamePlay.HandCard
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        public void UpdateCardData(CardData cardData)
+        public void UpdateCardData(Card cardData)
         {
-            myCardData.towerType = cardData.towerType;
-            myCardData.cost = cardData.cost;
-            myCardData.towerPrefab = cardData.towerPrefab;
-            myCardData.canBuildOnRoad = cardData.canBuildOnRoad;
-            myCardData.cardFace = cardData.cardFace;
-            myCardData.cardBack = cardData.cardBack;
+            TowerType = cardData.TowerType;
+            Cost = cardData.Cost;
+            TowerPrefab = cardData.TowerPrefab;
+            CanBuildOnRoad = cardData.CanBuildOnRoad;
+            CardFace = cardData.CardFace;
+            CardBack = cardData.CardBack;
         }
         
         public void OnPointerEnter(PointerEventData eventData)
@@ -58,7 +67,9 @@ namespace GamePlay.HandCard
         
         public void Interact()
         {
+            BuildingSystem.Instance.NowCard = this;
             AfterBuilt();
+            BuildingSystem.Instance.state = BuildingSystem.BuiltState.Building;
             /*if (!_isSelected)
             {
                 _cardLocalPosition = transform.localPosition;
@@ -75,12 +86,12 @@ namespace GamePlay.HandCard
 
         public void OnHoverEnter()
         {
-            print("鼠标进入卡牌");
+            
         }
 
         public void OnHoverExit()
         {
-            print("鼠标退出卡牌");
+            
         }
     }
 }

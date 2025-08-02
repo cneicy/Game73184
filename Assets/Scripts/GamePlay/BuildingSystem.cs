@@ -1,9 +1,11 @@
 using System;
+using GamePlay.HandCard;
 using UnityEngine;
+using Singleton;
 
 namespace GamePlay
 {
-    public class BuildingSystem : MonoBehaviour
+    public class BuildingSystem : Singleton<BuildingSystem>
     {
         public enum BuiltState
         {
@@ -13,6 +15,7 @@ namespace GamePlay
 
         public BuiltState state;
         [SerializeField] private Map map;
+        public Card NowCard { get; set; }
         
         private void Start()
         {

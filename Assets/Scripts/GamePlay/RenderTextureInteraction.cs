@@ -48,7 +48,6 @@ namespace GamePlay
 
             if (!verboseDebug) return;
             Debug.Log($"Canvas Render Mode: {GetComponentInParent<Canvas>().renderMode}");
-            Debug.Log($"Post-Processing Camera: {postProcessingCamera.name}");
             Debug.Log($"后处理相机位置: {postProcessingCamera.transform.position}");
             Debug.Log($"后处理相机正交大小: {postProcessingCamera.orthographicSize}");
         }
