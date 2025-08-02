@@ -64,10 +64,10 @@ namespace GamePlay.Objects.Heroes
             }
         }
 
-        [EventSubscribe("GameStart")]
+        [EventSubscribe("PowerOn")]
         public object GameStart(string anyway)
         {
-            Invoke(nameof(LoadPath),0.4f);
+            Invoke(nameof(LoadPath),0.1f);
             return null;
         }
         

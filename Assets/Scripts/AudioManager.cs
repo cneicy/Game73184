@@ -8,6 +8,7 @@ public class AudioManager : Singleton<AudioManager>
 {
     [SerializeField] private AudioSource[] heroHitAudioSource;
     [SerializeField] private AudioSource bgm;
+    [SerializeField] private AudioSource powerClick;
     private Hero _hero;
     
     [Header("BGM音高变化曲线")]
@@ -30,7 +31,6 @@ public class AudioManager : Singleton<AudioManager>
     private void Start()
     {
         _hero = FindObjectOfType<Hero>();
-        // 初始化BGM音高
         bgm.pitch = minPitch;
     }
 
@@ -38,7 +38,6 @@ public class AudioManager : Singleton<AudioManager>
     {
         if (EventManager.Instance)
             EventManager.Instance.RegisterEventHandlersFromAttributes(this);
-        bgm.Play();
         bgm.loop = true;
     }
 
@@ -47,31 +46,39 @@ public class AudioManager : Singleton<AudioManager>
         if (EventManager.Instance)
             EventManager.Instance.UnregisterAllEventsForObject(this);
         bgm.Stop();
-        // 停止所有正在进行的音高过渡
         _pitchTween?.Kill();
+    }
+
+    [EventSubscribe("PowerButtonClick")]
+    public object OnPowerButtonClick(string anyway)
+    {
+        powerClick.Play();
+        return null;
+    }
+
+    [EventSubscribe("PowerOn")]
+    public object OnGameStart(string anyway)
+    {
+        bgm.Play();
+        return null;
     }
 
     [EventSubscribe("Harvest")]
     public object OnHarvest(int finalDamage)
     {
         var healthPercent = _hero.Health / (float)Hero.MaxHealth;
-        var factor = 1 - healthPercent; // 血量越低，factor越大（0到1）
+        var factor = 1 - healthPercent;
         
-        // 使用曲线计算音高变化强度
         var curveValue = bgmPitchCurve.Evaluate(factor);
         
-        // 计算目标音高值
         var targetPitch = Mathf.Lerp(minPitch, maxPitch, curveValue);
         
-        // 停止之前的音高过渡
         _pitchTween?.Kill();
         
-        // 使用DOTween平滑过渡音高
         _pitchTween = DOTween.To(() => bgm.pitch, 
                                 x => bgm.pitch = x, 
                                 targetPitch, pitchTransitionDuration);
         
-        // 处理英雄受击音效
         HandleHeroHitSound(finalDamage);
         
         return null;
