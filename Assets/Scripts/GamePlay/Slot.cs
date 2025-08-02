@@ -13,6 +13,7 @@ namespace GamePlay
         public bool isBuilding;
         [SerializeField] private GameObject towerGameObject;
         [SerializeField] private GameObject shadowGameObject;
+        public Map map;
     
         // 放置单位到slot
         public bool PlaceUnit(GameObject unit)
@@ -26,13 +27,24 @@ namespace GamePlay
             return true;
         }
 
+        private void OnEnable()
+        {
+            map = GetComponentInParent<Map>();
+        }
+
+        private void Start()
+        {
+            
+        }
+
         private void Update()
         {
             if (BuildingSystem.Instance.state == BuildingSystem.BuiltState.Building)
             {
-                shadowGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;
-                Color alpha = shadowGameObject.GetComponent<SpriteRenderer>().color;
-                shadowGameObject.GetComponent<SpriteRenderer>().color = new Color(alpha.r, alpha.g, alpha.b, 0.65f);
+                towerGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;
+                /*shadowGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;*/
+                /*Color alpha = shadowGameObject.GetComponent<SpriteRenderer>().color;*/
+                /*shadowGameObject.GetComponent<SpriteRenderer>().color = new Color(alpha.r, alpha.g, alpha.b, 0.65f);*/
             }
         }
 
@@ -57,16 +69,16 @@ namespace GamePlay
 
         public void OnHoverEnter()
         {
-            if (isBuilding)
+            /*if (isBuilding)
             { 
                 Instantiate(shadowGameObject,transform.position,transform.localRotation,transform);
-            }
-            print("鼠标进入地块");
+            }*/
+            print("该地块位于"+gridPosition.ToString());
         }
 
         public void OnHoverExit()
         {
-            print("鼠标退出地块");
+            /*print("鼠标退出地块");*/
         }
     }
 }

@@ -79,8 +79,10 @@ namespace GamePlay
         };
 
         private Vector2Int _size;
-        
 
+        //用于防御塔索敌
+        public Slot[,] Region;
+        
         private void OnEnable()
         {
             if(EventManager.Instance)
@@ -101,6 +103,7 @@ namespace GamePlay
             Debug.Log($"地图尺寸: {_size.x}x{_size.y}, 当前地图索引: {currentMapIndex}");
             Debug.Log($"Schema数组维度: [{_schema.GetLength(0)}, {_schema.GetLength(1)}, {_schema.GetLength(2)}]");
 
+            Region = new Slot[_size.x,_size.y];
             MapSchema = new GameObject[_size.x, _size.y];
             GenerateMap();
             return null;
@@ -134,6 +137,8 @@ namespace GamePlay
                     var cell = isRoad
                         ? Instantiate(road, pos, Quaternion.identity, transform)
                         : Instantiate(slotPrefab, pos, Quaternion.identity, transform);
+                    
+                    Region[x,y] = cell.GetComponent<Slot>();
                     
                     if (!isRoad)
                     {

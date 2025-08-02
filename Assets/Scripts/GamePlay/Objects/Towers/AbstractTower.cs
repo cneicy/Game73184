@@ -27,10 +27,7 @@ namespace GamePlay.Objects.Towers
         public float AttackCoolDown { get; set; }
         public int Cost { get; set; }
 
-        public void Move()
-        {
-            
-        }
+        protected abstract void Move();
 
         private void FixedUpdate()
         {
