@@ -7,9 +7,11 @@ namespace GamePlay
 {
     public class Debugger : MonoBehaviour
     {
+        [SerializeField] private DamageType damageType;
+        [SerializeField] private int damageAmount;
         public void HitBoss()
         {
-            EventManager.Instance.TriggerEvent("AttackHero", new TowerAttack(DamageType.Normal, 20));
+            EventManager.Instance.TriggerEvent("AttackHero", new TowerAttack(damageType, damageAmount));
         }
         
     }

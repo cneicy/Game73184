@@ -7,26 +7,19 @@ namespace GamePlay.Objects.Heroes
 {
     public class Hero : MonoBehaviour, IInteractable
     {
-        public static readonly float MaxHealth = 200f;
+        public static readonly int MaxHealth = 200;
         [SerializeField] private ParticleSystem particles;
         [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField] private float health;
+        [SerializeField] private int health;
         [SerializeField] private DamageType damageType;
-        [SerializeField] private int damageTime;
-        
+        [SerializeField] private float dRPer;
         public DamageType DamageType
         {
             get => damageType;
             set => damageType = value;
         }
 
-        public int DamageTime
-        {
-            get => damageTime;
-            set => damageTime = value;
-        }
-
-        public float Health
+        public int Health
         {
             get => health;
             set => health = value;
@@ -46,6 +39,7 @@ namespace GamePlay.Objects.Heroes
 
         private void Start()
         {
+            health = MaxHealth;
             spriteRenderer = GetComponent<SpriteRenderer>();
             Clear();
         }
@@ -57,7 +51,6 @@ namespace GamePlay.Objects.Heroes
 
         public object Clear()
         {
-            DamageTime = 0;
             DamageType = DamageType.UnDefine;
             return null;
         }
@@ -72,21 +65,52 @@ namespace GamePlay.Objects.Heroes
         [EventSubscribe("AttackHero")]
         public object OnGetHurt(TowerAttack towerAttack)
         {
-            if (towerAttack.DamageType != DamageType)
+            if (towerAttack.DamageType == DamageType.AP)
             {
-                DamageTime = 0;
-                DamageType = towerAttack.DamageType;
+                var finalDamage = towerAttack.Damage;
+                particles.Play();
+                Health -= finalDamage;
+                StartCoroutine(ColorChange());
+                EventManager.Instance.TriggerEvent("Harvest", finalDamage);
+                CheckHealth();
+                return finalDamage;
             }
-            else DamageTime++;
 
-            var finalDamage = towerAttack.Damage - DamageTime * 0.1f;
-            if(finalDamage <= 0) return finalDamage;
-            particles.Play();
-            Health -= finalDamage;
-            StartCoroutine(ColorChange());
-            EventManager.Instance.TriggerEvent("Harvest", finalDamage);
-            CheckHealth();
-            return finalDamage;
+            if (towerAttack.DamageType == DamageType.Clear)
+            {
+                dRPer = 0;
+                var finalDamage = towerAttack.Damage;
+                particles.Play();
+                Health -= finalDamage;
+                StartCoroutine(ColorChange());
+                EventManager.Instance.TriggerEvent("Harvest", finalDamage);
+                CheckHealth();
+                return finalDamage;
+            }
+
+            if(towerAttack.DamageType == DamageType.Normal)
+            {
+                if (dRPer == 0)
+                {
+                    dRPer += towerAttack.Damage/(float)MaxHealth * 0.1f;
+                    health -= towerAttack.Damage;
+                    EventManager.Instance.TriggerEvent("Harvest", towerAttack.Damage);
+                    return towerAttack.Damage;
+                }
+                else
+                {
+                    dRPer += towerAttack.Damage/(float)MaxHealth *dRPer * 0.1f;
+                }
+
+                if (towerAttack.Damage == 0)
+                {
+                    health -= towerAttack.Damage;
+                    EventManager.Instance.TriggerEvent("Harvest", towerAttack.Damage);
+                    return towerAttack.Damage;
+                }
+            }
+
+            return MaxHealth;
         }
 
         public void CheckHealth()

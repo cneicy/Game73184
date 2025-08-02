@@ -4,6 +4,7 @@
     {
         UnDefine,
         Normal,
-        Energy
+        AP,
+        Clear
     }
 }

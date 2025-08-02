@@ -35,7 +35,7 @@ namespace Visual
         }
 
         [EventSubscribe("Harvest")]
-        public object TriggerHitEffect(float harvest)
+        public object TriggerHitEffect(int harvest)
         {
             _rawImage.rectTransform.anchoredPosition = _originalPosition;
             _rawImage.rectTransform
