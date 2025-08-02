@@ -8,14 +8,16 @@ namespace GamePlay.Objects.Heroes
     public class HeroTrack : MonoBehaviour
     {
         public Map map;
-        public float moveSpeed = 5f;
+        public float moveSpeed;
 
         private List<Vector2> _pathPoints;
         private int _currentTargetIndex;
         private bool _isMoving;
         private SpriteRenderer _spriteRenderer;
+
         private Animator _animator;
 
+        //private SquashWalkAnimation  _walkSequence;
         private static readonly int DirX = Animator.StringToHash("DirX");
         private static readonly int DirY = Animator.StringToHash("DirY");
 
@@ -40,22 +42,24 @@ namespace GamePlay.Objects.Heroes
 
         private void Start()
         {
+            map = FindFirstObjectByType<Map>();
             if (!map)
             {
                 Debug.LogError("Map引用未设置");
                 return;
             }
 
+            //_walkSequence = GetComponentInChildren<SquashWalkAnimation>();
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             _animator = GetComponentInChildren<Animator>();
 
-            if (_spriteRenderer == null)
+            if (!_spriteRenderer)
             {
                 Debug.LogError("SpriteRenderer组件未找到");
                 return;
             }
 
-            if (_animator == null)
+            if (!_animator)
             {
                 Debug.LogError("Animator组件未找到");
                 return;
@@ -82,12 +86,21 @@ namespace GamePlay.Objects.Heroes
 
         private void Update()
         {
-            if (!_isMoving || _pathPoints.Count == 0) return;
+            if (!_isMoving || _pathPoints.Count == 0)
+            {
+                //_walkSequence.StopWalking();
+                return;
+            }
 
+            //_walkSequence.StartWalking();
             var targetPoint = _pathPoints[_currentTargetIndex];
 
             var direction = targetPoint - (Vector2)transform.position;
             direction.Normalize();
+            /*var distance = direction.magnitude;
+            var speedFactor = Mathf.Clamp01(moveSpeed * Time.deltaTime / distance);
+
+            _walkSequence.SetAnimationSpeed(speedFactor);*/
 
             transform.position += (Vector3)direction * (moveSpeed * Time.deltaTime);
 

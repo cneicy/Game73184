@@ -27,7 +27,6 @@ namespace GamePlay
         public object OnHarvest(float harvestMoney)
         {
             Money += harvestMoney;
-            Debug.Log("NowMoney:"+Money);
             return harvestMoney;
         }
 

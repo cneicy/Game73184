@@ -1,8 +1,9 @@
+
 using System;
 using DG.Tweening;
+
 using UnityEngine;
 using Singleton;
-using UnityEngine.Serialization;
 
 namespace GamePlay.HandCard
 {
@@ -32,7 +33,9 @@ namespace GamePlay.HandCard
 
         public void CardFlip(bool flipped,Transform localTransform)
         {
-            transform.DORotate(new Vector3(0, flipped ? 180f : 0, 0), 0.25f);
+            print("旋转");
+            Vector3 newVec3 = -localTransform.localRotation.eulerAngles+new Vector3(0f,180f,0f);
+            localTransform.DORotate(newVec3, 0.25f);
         }
     }
 }

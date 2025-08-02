@@ -5,13 +5,27 @@ using UnityEngine;
 
 namespace GamePlay.Objects.Heroes
 {
-    public class Hero : MonoBehaviour , IInteractable
+    public class Hero : MonoBehaviour, IInteractable
     {
+        public static readonly float MaxHealth = 200f;
         [SerializeField] private ParticleSystem particles;
         [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField]private float health;
-        public DamageType damageType;
-        public int damageTime;
+        [SerializeField] private float health;
+        [SerializeField] private DamageType damageType;
+        [SerializeField] private int damageTime;
+        
+        public DamageType DamageType
+        {
+            get => damageType;
+            set => damageType = value;
+        }
+
+        public int DamageTime
+        {
+            get => damageTime;
+            set => damageTime = value;
+        }
+
         public float Health
         {
             get => health;
@@ -20,13 +34,13 @@ namespace GamePlay.Objects.Heroes
 
         private void OnEnable()
         {
-            if(EventManager.Instance)
+            if (EventManager.Instance)
                 EventManager.Instance.RegisterEventHandlersFromAttributes(this);
         }
 
         private void OnDisable()
         {
-            if(EventManager.Instance)
+            if (EventManager.Instance)
                 EventManager.Instance.UnregisterAllEventsForObject(this);
         }
 
@@ -43,8 +57,8 @@ namespace GamePlay.Objects.Heroes
 
         public object Clear()
         {
-            damageTime = 0;
-            damageType = DamageType.UnDefine;
+            DamageTime = 0;
+            DamageType = DamageType.UnDefine;
             return null;
         }
 
@@ -58,28 +72,29 @@ namespace GamePlay.Objects.Heroes
         [EventSubscribe("AttackHero")]
         public object OnGetHurt(TowerAttack towerAttack)
         {
-            particles.Play();
-            if (towerAttack.DamageType != damageType)
+            if (towerAttack.DamageType != DamageType)
             {
-                damageTime = 0;
-                damageType = towerAttack.DamageType;
+                DamageTime = 0;
+                DamageType = towerAttack.DamageType;
             }
-            else damageTime++;
-            var finalDamage = towerAttack.Damage - damageTime * 0.1f;
+            else DamageTime++;
+
+            var finalDamage = towerAttack.Damage - DamageTime * 0.1f;
+            if(finalDamage <= 0) return finalDamage;
+            particles.Play();
             Health -= finalDamage;
             StartCoroutine(ColorChange());
             EventManager.Instance.TriggerEvent("Harvest", finalDamage);
             CheckHealth();
-            Debug.Log("Hero Hit:"+finalDamage+"HPL:"+health);
             return finalDamage;
         }
 
         public void CheckHealth()
         {
-            if (health <= 0)
-            {
-                EventManager.Instance.TriggerEvent("HeroDead","等待戈多");
-            }
+            if (!(health <= 0)) return;
+            health = 0;
+            Debug.Log("Hero死亡");
+            EventManager.Instance.TriggerEvent("HeroDead", "等待戈多");
         }
 
         public void OnTriggerEnter2D(Collider2D other)
