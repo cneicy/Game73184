@@ -17,7 +17,7 @@ namespace GamePlay
         public bool showDebugRays = true;
         public Color rayColor = Color.red;
         public Color hitColor = Color.green;
-        public Color hoverColor = Color.blue; // 新增悬停颜色
+        public Color hoverColor = new Color(0.2f, 0.6f, 1f, 1f); // 悬停颜色
         public float gizmoSize = 0.2f;
         public bool verboseDebug = true;
     
@@ -48,7 +48,6 @@ namespace GamePlay
 
             if (!verboseDebug) return;
             Debug.Log($"Canvas Render Mode: {GetComponentInParent<Canvas>().renderMode}");
-            Debug.Log($"Post-Processing Camera: {postProcessingCamera.name}");
             Debug.Log($"后处理相机位置: {postProcessingCamera.transform.position}");
             Debug.Log($"后处理相机正交大小: {postProcessingCamera.orthographicSize}");
         }
@@ -177,7 +176,6 @@ namespace GamePlay
                 var interactable = _hitCollider.GetComponent<IInteractable>();
                 if (interactable != null) 
                 {
-                    Debug.Log("触发交互");
                     interactable.Interact();
                 }
                 else
@@ -187,14 +185,12 @@ namespace GamePlay
             }
             else
             {
-                //Debug.LogWarning("没有命中任何碰撞体");
+                Debug.Log("没有命中任何碰撞体");
             }
         
             // 存储调试数据
             _debugRayOrigin = worldPoint.Value;
             _debugRayDirection = Vector3.forward;
-        
-            //Debug.Log($"=== 调试数据更新: 原点={_debugRayOrigin}, 命中={_hasHit} ===");
         }
         
         /// <summary>
@@ -216,8 +212,6 @@ namespace GamePlay
                 return null;
             }
         
-            /*if (verboseDebug) Debug.Log($"屏幕坐标: {screenPosition} -> 局部坐标: {localPoint}");*/
-
             // 2. 计算归一化UV坐标（0-1范围）
             var rawImageRect = _rectTransform.rect;
             var normalizedPoint = new Vector2(
@@ -225,8 +219,6 @@ namespace GamePlay
                 (localPoint.y - rawImageRect.y) / rawImageRect.height
             );
         
-            /*if (verboseDebug) Debug.Log($"RawImage矩形: {rawImageRect} -> 归一化坐标: {normalizedPoint}");*/
-
             // 3. 处理自定义UV区域
             if (_rawImage.uvRect != new Rect(0, 0, 1, 1))
             {
@@ -331,12 +323,8 @@ namespace GamePlay
         }
     }
 
-    /*public interface IInteractable
-    {
-        void Interact();
-    }*/
     
-    // 新增悬停接口
+    
     public interface IHoverable
     {
         void OnHoverEnter();

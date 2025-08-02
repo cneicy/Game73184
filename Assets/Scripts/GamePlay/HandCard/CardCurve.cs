@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using GamePlay.Objects;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Splines;
 
 namespace GamePlay.HandCard
 {
+    
     public class CardCurve : MonoBehaviour
     {
         [SerializeField] private int maxHandSize;
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private SplineContainer splineContainer;
         [SerializeField] private Transform spawnPoint;
-        private List<Card> _cards = new List<Card>();
+        [SerializeField] private List<Card> cardsList = new List<Card>();
         private List<GameObject> _handCards = new List<GameObject>();
         private Vector3 _difPos = new Vector3(-6,-12,0);
         private bool _isDrawing = false;
@@ -30,7 +33,7 @@ namespace GamePlay.HandCard
             _isDrawing = true;
             
             // 计算需要补充的卡牌数量
-            int cardsToDraw = maxHandSize - _handCards.Count;
+            int cardsToDraw = cardsList.Count;
             
             for (int i = 0; i < cardsToDraw; i++)
             {
@@ -52,7 +55,7 @@ namespace GamePlay.HandCard
         private void UpdateCardPositions()
         {
             if (_handCards.Count == 0)  return;
-            float cardSpacing = 1f / maxHandSize;
+            float cardSpacing = 1f / (maxHandSize+2);
             float firstCardPosition = 0.5f-(_handCards.Count-1)*cardSpacing/2;
             Spline spline = splineContainer.Spline;
             for (int i = 0; i < _handCards.Count; i++)
@@ -65,6 +68,16 @@ namespace GamePlay.HandCard
                 _handCards[i].transform.DOMove(splinePosition+_difPos, 0.25f);
                 _handCards[i].transform.DORotateQuaternion(rotation, 0.25f);
             }
+            UpdateCardData();
         }
+
+        private void UpdateCardData()
+        {
+            for (int i = 0; i < _handCards.Count; i++)
+            {
+                _handCards[i].GetComponent<Card>().UpdateCardData(cardsList[i]);
+            }
+        }
+        
     }
 }

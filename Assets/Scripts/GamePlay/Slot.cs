@@ -1,15 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GamePlay
 {
-    public class Slot : MonoBehaviour,IInteractable
+    public class Slot : MonoBehaviour,IInteractable,IHoverable
     {
         public Vector2Int gridPosition; // 在地图网格中的位置
         public GameObject placedUnit;    // 放置在slot上的单位
         public bool isOuterSlot;        // 是否是外部slot（道路外部区域）
         public bool IsOccupied => placedUnit != null; // 是否已被占用
-        public bool _isBuilding;
+        public bool isBuilding;
         [SerializeField] private GameObject towerGameObject;
+        [SerializeField] private GameObject shadowGameObject;
     
         // 放置单位到slot
         public bool PlaceUnit(GameObject unit)
@@ -22,7 +25,17 @@ namespace GamePlay
         
             return true;
         }
-    
+
+        private void Update()
+        {
+            if (BuildingSystem.Instance.state == BuildingSystem.BuiltState.Building)
+            {
+                shadowGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;
+                Color alpha = shadowGameObject.GetComponent<SpriteRenderer>().color;
+                shadowGameObject.GetComponent<SpriteRenderer>().color = new Color(alpha.r, alpha.g, alpha.b, 0.65f);
+            }
+        }
+
         // 从slot移除单位
         public bool RemoveUnit()
         {
@@ -33,14 +46,27 @@ namespace GamePlay
         
             return true;
         }
-
         public void Interact()
         {
-            if (_isBuilding)
+            if (isBuilding)
             {
                 Instantiate(towerGameObject,transform.position,transform.localRotation,transform);
             }
             print("建造");
+        }
+
+        public void OnHoverEnter()
+        {
+            if (isBuilding)
+            { 
+                Instantiate(shadowGameObject,transform.position,transform.localRotation,transform);
+            }
+            print("鼠标进入地块");
+        }
+
+        public void OnHoverExit()
+        {
+            print("鼠标退出地块");
         }
     }
 }
