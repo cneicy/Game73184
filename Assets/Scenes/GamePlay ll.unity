@@ -4184,7 +4184,7 @@ MonoBehaviour:
   TowerType: 4
   TowerPrefab: {fileID: 4424409528615533993, guid: ee2ff3f12ac4f2d4ebfe31bde191671b, type: 3}
   CanBuildOnRoad: 0
-  CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
+  CardFace: {fileID: 21300000, guid: db0932c6aa1f45e42a27d107b336b1bf, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
   cd: 0
   maxChargingIndex: 0
@@ -4510,7 +4510,7 @@ MonoBehaviour:
   TowerType: 8
   TowerPrefab: {fileID: 4424409528615533993, guid: bd5a2ab70c4092c4ea11e44b49349fe5, type: 3}
   CanBuildOnRoad: 0
-  CardFace: {fileID: 1311363702, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
+  CardFace: {fileID: 21300000, guid: fb19d0d248882b248bb28228b8e34e0e, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
   cd: 0
   maxChargingIndex: 0
@@ -5096,7 +5096,7 @@ MonoBehaviour:
   TowerType: 7
   TowerPrefab: {fileID: 4424409528615533993, guid: 061bebd46cd05ff498d1f87da15c2a17, type: 3}
   CanBuildOnRoad: 0
-  CardFace: {fileID: -1226726504, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
+  CardFace: {fileID: 21300000, guid: d3b7696d9a04c494eb8e1220189da6fa, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
   cd: 0
   maxChargingIndex: 0
@@ -10039,7 +10039,7 @@ MonoBehaviour:
   TowerType: 5
   TowerPrefab: {fileID: 4424409528615533993, guid: e5a1d51088f60604b921f8032cd68472, type: 3}
   CanBuildOnRoad: 0
-  CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
+  CardFace: {fileID: 21300000, guid: 11ce99a7c69fcff489f027c493e83239, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
   cd: 0
   maxChargingIndex: 1
