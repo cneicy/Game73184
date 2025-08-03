@@ -7,6 +7,7 @@
         Mirror,
         CompetitiveFulcrum,
         BlindEye,
-        GhostNeedle
+        GhostNeedle,
+        Printer,
     }
 }
