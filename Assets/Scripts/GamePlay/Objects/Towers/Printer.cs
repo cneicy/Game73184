@@ -12,6 +12,7 @@ namespace GamePlay.Objects.Towers
         private void Start()
         {
             DamageType = DamageType.Normal;
+            TowerType = TowerType.Recorder;
             Damage = 300;
             AttackCoolDown = 1;
             PlaceCoolDown = 28;
