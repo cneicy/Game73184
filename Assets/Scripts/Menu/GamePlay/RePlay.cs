@@ -11,6 +11,7 @@ namespace Menu.GamePlay
         [SerializeField] private TMP_Text healthText;
         [SerializeField] private Hero hero;
         [SerializeField] private GameObject panel;
+        [SerializeField] private GameObject debugBtn;
 
         private void OnEnable()
         {
@@ -30,6 +31,7 @@ namespace Menu.GamePlay
             if(GameManager.Instance.GameState == GameState.GameOver) return null;
             panel.SetActive(false);
             hero.Health = Hero.MaxHealth;
+            debugBtn.SetActive(true);
             return null;
         }
 
