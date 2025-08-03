@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using Event;
+using GamePlay.Objects;
+using GamePlay.Objects.Towers;
+using UnityEngine;
 
 namespace GamePlay
 {
@@ -66,6 +69,8 @@ namespace GamePlay
             print("建造");
         }
 
+        
+        
         public void OnHoverEnter()
         {
             if (BuildingSystem.Instance.state== BuildingSystem.BuiltState.Building)
@@ -79,6 +84,20 @@ namespace GamePlay
         {
             print("鼠标退出地块");
             _spriteRenderer.color =isCounter ? Color.red : Color.white; ;
+        }
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (isCounter)
+            {
+                if (other.CompareTag("Hero"))
+                {
+                    EventManager.Instance.TriggerEvent("AttackHero", new TowerAttack(DamageType.AP, 1000));
+                }
+                isCounter = false;
+                _spriteRenderer.color =isCounter ? Color.red : Color.white; ;
+            }
+            
         }
     }
 }

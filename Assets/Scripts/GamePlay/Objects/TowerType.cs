@@ -6,8 +6,8 @@
         Domino,
         Mirror,
         CompetitiveFulcrum,
-        BlindEye,
-        GhostNeedle,
+        BlindEye,//
+        GhostNeedle,//灵体针
         Singularity,//奇点
         Counter, //计数器
         Ghost, //魂块

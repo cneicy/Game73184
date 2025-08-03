@@ -8,7 +8,7 @@ namespace GamePlay
     public class StoreSystem : Singleton<StoreSystem>
     {
         [SerializeField]private BuildTowerData _buildTowerData;
-        [SerializeField] public CardCurve cardCurve;
+        [SerializeField] public CardCurve1 cardCurve;
         private void Start()
         {
             _buildTowerData = GetComponent<BuildTowerData>();
