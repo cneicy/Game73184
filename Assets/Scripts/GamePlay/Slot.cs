@@ -92,7 +92,7 @@ namespace GamePlay
             {
                 if (other.CompareTag("Hero"))
                 {
-                    EventManager.Instance.TriggerEvent("AttackHero", new TowerAttack(DamageType.AP, 1000));
+                    EventManager.Instance.TriggerEvent("AttackHero", new TowerAttack(DamageType.Clear, 1000));
                 }
                 isCounter = false;
                 _spriteRenderer.color =isCounter ? Color.red : Color.white; ;

@@ -31,7 +31,6 @@ namespace Menu.GamePlay
             if(GameManager.Instance.GameState == GameState.GameOver) return null;
             panel.SetActive(false);
             hero.Health = Hero.MaxHealth;
-            debugBtn.SetActive(true);
             return null;
         }
 
@@ -40,6 +39,7 @@ namespace Menu.GamePlay
         {
             panel.SetActive(true);
             healthText.text = "Hero HP Left: " + hero.Health;
+            //debugBtn.SetActive(true);
             return null;
         }
     }
