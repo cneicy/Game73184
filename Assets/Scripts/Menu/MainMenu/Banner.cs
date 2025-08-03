@@ -1,5 +1,4 @@
 using Event;
-using GamePlay;
 using UnityEngine;
 
 namespace Menu.MainMenu

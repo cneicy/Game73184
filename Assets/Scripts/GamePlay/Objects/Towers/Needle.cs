@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using DG.Tweening;
 using Event;
 using UnityEngine;
@@ -66,7 +64,6 @@ namespace GamePlay.Objects.Towers
             if (other.CompareTag("Road") || other.CompareTag("Slot"))
             {
                 _blockFlies++;
-                Debug.Log(_blockFlies);
             }
             if (other.CompareTag("Hero"))
             {
