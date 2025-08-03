@@ -114,6 +114,13 @@ namespace Visual
             _lensDistortion.intensity.value = _currentLensDistortion;
         }
 
+        [EventSubscribe("PowerOn")]
+        public object UpdatePowerOn(string anyway)
+        {
+            UpdateColorGrading(1);
+            return null;
+        }
+        
         [EventSubscribe("Harvest")]
         public object UpdateColorGrading(int finalDamage)
         {

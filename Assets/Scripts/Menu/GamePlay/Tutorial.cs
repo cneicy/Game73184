@@ -8,6 +8,7 @@ namespace Menu.GamePlay
     {
         [SerializeField] private GameObject[] tutorial;
         [SerializeField] private GameObject textGroup;
+        [SerializeField] private GameObject tipText;
         private int _index;
         private bool _isEnabled;
         
@@ -63,6 +64,7 @@ namespace Menu.GamePlay
             {
                 tutorial[i].SetActive(i == _index);
             }
+            tipText.SetActive(false);
             return null;
         }
 
@@ -79,6 +81,7 @@ namespace Menu.GamePlay
             {
                 tutorial[i].SetActive(i == _index);
             }
+            tipText.SetActive(false);
             return null;
         }
     }
