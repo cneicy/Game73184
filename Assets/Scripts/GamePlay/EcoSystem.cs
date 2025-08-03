@@ -35,7 +35,7 @@ namespace GamePlay
             {
                 { TowerType.UnDefine, 0 },
                 { TowerType.Domino, 10 },
-                { TowerType.Blindeye, 11 },
+                { TowerType.BlindEye, 11 },
                 { TowerType.CompetitiveFulcrum, 12 },
                 { TowerType.Mirror, 13 }
             };

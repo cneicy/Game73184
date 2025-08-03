@@ -6,6 +6,7 @@
         Domino,
         Mirror,
         CompetitiveFulcrum,
-        Blindeye
+        BlindEye,
+        GhostNeedle
     }
 }

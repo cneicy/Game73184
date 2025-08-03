@@ -1,0 +1,41 @@
+using System;
+using UnityEngine;
+using UnityEngine.Serialization;
+
+namespace GamePlay.Objects.Towers
+{
+    public class GhostNeedle : MonoBehaviour
+    {
+        [SerializeField]private Slot parentSlot;
+        [SerializeField]private Map map;
+        [SerializeField]private GameObject needle;
+        
+        private void OnEnable()
+        {
+            parentSlot = GetComponentsInParent<Slot>()[1];
+            map = parentSlot.map;
+            ShootNeedle();
+        }
+
+        private void Start()
+        {
+            parentSlot.needleTarget = true;
+        }
+
+        public void ShootNeedle()
+        {
+            foreach (var slot in map.Region)
+            {
+                if (!slot.IsOccupied)
+                {
+                    Instantiate(needle, slot.transform.position, Quaternion.identity);
+                }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            parentSlot.needleTarget = false;
+        }
+    }
+}

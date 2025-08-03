@@ -15,6 +15,9 @@ namespace GamePlay
         [SerializeField] private GameObject shadowGameObject;
         public Map map;
         private SpriteRenderer _spriteRenderer;
+        
+        //防御塔效果
+        public bool needleTarget;
     
         // 放置单位到slot
         public bool PlaceUnit(GameObject unit)
