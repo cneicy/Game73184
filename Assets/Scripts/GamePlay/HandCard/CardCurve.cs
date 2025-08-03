@@ -23,14 +23,6 @@ namespace GamePlay.HandCard
         [EventSubscribe("PowerOn")]
         public object StartCardAnimation(string s = "")
         {
-            var temp = FindObjectsByType<Card>(FindObjectsSortMode.None);
-            foreach (var card in temp)
-            {
-                Destroy(card.gameObject);
-            }
-            _handCards.Clear();
-            StopCoroutine(nameof(DrawAllCard));
-            StopCoroutine(nameof(HideAllCard));
             StartCoroutine(nameof(DrawAllCard));
             return null;
         }
@@ -38,8 +30,6 @@ namespace GamePlay.HandCard
         [EventSubscribe("PowerOff")]
         public object HideCardAnimation(string s = "")
         {
-            StopCoroutine(nameof(DrawAllCard));
-            StopCoroutine(nameof(HideAllCard));
             StartCoroutine(nameof(HideAllCard));
             return null;
         }

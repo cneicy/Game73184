@@ -34,6 +34,7 @@ namespace GamePlay.HandCard
             _cardLocalPosition = transform.localPosition;
             _localTransform = transform;
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            if(_spriteRenderer) _spriteRenderer.sprite = CardFace;
         }
         
 
