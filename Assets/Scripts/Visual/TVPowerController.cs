@@ -69,16 +69,24 @@ namespace Visual
             if (_isOn)
             {
                 TurnOffTV();
-                star.SetActive(false);
             }
             else
             {
                 TurnOnTV();
-                star.SetActive(true);
             }
 
             _isOn = !_isOn;
             return "114514";
+        }
+
+        private void ActiveStar()
+        {
+            star.SetActive(true);
+        }
+
+        private void DisableStar()
+        {
+            star.SetActive(false);
         }
 
         [EventSubscribe("GameOver")]
@@ -99,6 +107,7 @@ namespace Visual
         
         public void TurnOffTV()
         {
+            Invoke(nameof(DisableStar),0.5f);
             var turnOffSequence = DOTween.Sequence();
             
             //turnOffSequence.AppendCallback(() => Shake());
@@ -130,6 +139,7 @@ namespace Visual
 
         public void TurnOnTV()
         {
+            ActiveStar();
             var turnOnSequence = DOTween.Sequence();
 
             turnOnSequence.AppendCallback(() => { rawImage.DOFade(onOpacity, 0.2f).SetEase(Ease.InOutQuad); });
