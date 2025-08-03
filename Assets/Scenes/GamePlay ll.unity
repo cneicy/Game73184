@@ -3266,7 +3266,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &744614310
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6109,11 +6109,11 @@ MonoBehaviour:
   _cardLocalPosition: {x: 0, y: 0, z: 0}
   isFlipped: 0
   TowerType: 6
-  Cost: 0
   TowerPrefab: {fileID: 4424409528615533993, guid: 85230a4b842bfff47a570c856be1b768, type: 3}
   CanBuildOnRoad: 0
   CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 0
   maxChargingIndex: 1
   nowChargingIndex: 0
 --- !u!1 &1381063272
@@ -9752,7 +9752,7 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: 1618707750, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  cd: 999
+  cd: 0
   maxChargingIndex: 1
   nowChargingIndex: 0
 --- !u!1 &1912559153
@@ -9841,8 +9841,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardLocalPosition: {x: 0, y: 0, z: 0}
   isFlipped: 0
-  TowerType: 0
-  TowerPrefab: {fileID: 4424409528615533993, guid: 51d8073c83e21874d94249df078a0674, type: 3}
+  TowerType: 9
+  TowerPrefab: {fileID: 4424409528615533993, guid: 85230a4b842bfff47a570c856be1b768, type: 3}
   CanBuildOnRoad: 0
   CardFace: {fileID: 1241273606, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
@@ -9904,7 +9904,7 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  cd: 1
+  cd: 0
   maxChargingIndex: 1
   nowChargingIndex: 0
 --- !u!1 &1994248501

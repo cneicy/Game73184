@@ -32,6 +32,7 @@ namespace GamePlay.Objects.Towers
         {
             yield return new WaitForSeconds(AttackCoolDown);
             Attack();
+            StartCoroutine(nameof(AttackCon));
         }
         
 
