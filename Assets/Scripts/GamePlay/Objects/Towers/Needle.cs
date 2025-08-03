@@ -77,7 +77,7 @@ namespace GamePlay.Objects.Towers
         {
             if (_target && _target.GetComponentInChildren<GhostNeedle>())
             {
-                _target.GetComponentInChildren<GhostNeedle>().DestroyItself();
+                
             }
         }
     }
