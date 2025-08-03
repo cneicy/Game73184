@@ -9,6 +9,8 @@ namespace Menu.GamePlay
         [SerializeField] private GameObject[] tutorial;
         [SerializeField] private GameObject textGroup;
         private int _index;
+        private bool _isEnabled;
+        
         private void OnEnable()
         {
             if (EventManager.Instance)
@@ -33,20 +35,25 @@ namespace Menu.GamePlay
             return null;
         }
         
-        [EventSubscribe("PowerButtonClick")]
-        public object PowerButtonClick(string anyway)
+        [EventSubscribe("Tutorial")]
+        public object OnTutorialStart(string anyway)
         {
-            if (GameManager.Instance.GameState == GameState.FirstStart)
+            Invoke(nameof(StartDelay),0.5f);
+            return null;
+        }
+
+        private void StartDelay()
+        {
+            if (GameManager.Instance.GameState == GameState.Tutorial)
             {
                 textGroup.SetActive(true);
             }
-            return null;
         }
 
         [EventSubscribe("TurningNext")]
         public object NextTutorial(GameState gameState)
         {
-            if(gameState != GameState.FirstStart) return null;
+            if(gameState != GameState.Tutorial) return null;
             if (_index + 1 == tutorial.Length)
             {
                 _index = 0;
@@ -62,7 +69,7 @@ namespace Menu.GamePlay
         [EventSubscribe("TurningPrevious")]
         public object PreviousTutorial(GameState gameState)
         {
-            if (gameState != GameState.FirstStart) return null;
+            if (gameState != GameState.Tutorial) return null;
             if (_index - 1 < 0)
             {
                 _index =  tutorial.Length - 1;

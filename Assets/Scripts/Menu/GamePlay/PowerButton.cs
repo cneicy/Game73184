@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Event;
+using UnityEngine;
 
 namespace Menu.GamePlay
 {
@@ -6,6 +7,38 @@ namespace Menu.GamePlay
     {
         private bool _isOn;
 
+        [EventSubscribe("PowerOff")]
+        public object OnPowerOff(string anyway)
+        {
+            var temp = transform.localScale;
+            temp.x = -1;
+            _isOn = false;
+            transform.localScale = temp;
+            return null;
+        }
+
+        [EventSubscribe("PowerOn")]
+        public object OnPowerOn(string anyway)
+        {
+            var temp = transform.localScale;
+            temp.x = 1;
+            _isOn = true;
+            transform.localScale = temp;
+            return null;
+        }
+        
+        private void OnEnable()
+        {
+            if (EventManager.Instance)
+                EventManager.Instance.RegisterEventHandlersFromAttributes(this);
+        }
+
+        private void OnDisable()
+        {
+            if (EventManager.Instance)
+                EventManager.Instance.UnregisterAllEventsForObject(this);
+        }
+        
         public void Click()
         {
             _isOn = !_isOn;

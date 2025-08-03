@@ -74,12 +74,29 @@ public class AudioManager : Singleton<AudioManager>
     [EventSubscribe("PowerOn")]
     public object OnGameStart(string anyway)
     {
+        powerClick.Play();
+        if (GameManager.Instance.GameState != GameState.Playing) return null;
         bgm.Play();
+        return null;
+    }
+
+    [EventSubscribe("PowerOff")]
+    public object OnPowerOff(string anyway)
+    {
+        bgm.Stop();
+        powerClick.Play();
         return null;
     }
 
     [EventSubscribe("GameOver")]
     public object OnGameOver(string anyway)
+    {
+        bgm.Stop();
+        return null;
+    }
+    
+    [EventSubscribe("RePlay")]
+    public object OnRePlay(string anyway)
     {
         bgm.Stop();
         return null;

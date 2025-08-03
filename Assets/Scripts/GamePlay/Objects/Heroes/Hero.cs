@@ -62,6 +62,13 @@ namespace GamePlay.Objects.Heroes
             spriteRenderer.color = Color.white;
         }
 
+        [EventSubscribe("NewGame")]
+        public object OnNewGame(string a)
+        {
+            health = MaxHealth;
+            return null;
+        }
+
         [EventSubscribe("AttackHero")]
         public object OnGetHurt(TowerAttack towerAttack)
         {

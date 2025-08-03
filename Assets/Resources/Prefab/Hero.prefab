@@ -5451,7 +5451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a414c9ca4644e578b5cbf4ccdc1dac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 0}
   moveSpeed: 0.3
 --- !u!1001 &5735140221674938909
 PrefabInstance:
@@ -5465,6 +5464,10 @@ PrefabInstance:
       propertyPath: particles
       value: 
       objectReference: {fileID: 5839771268272099338}
+    - target: {fileID: 4415408603485845505, guid: e335e10b96e1c0f439d594e1d2bb3226, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4492016372372737573, guid: e335e10b96e1c0f439d594e1d2bb3226, type: 3}
       propertyPath: m_Size.x
       value: 0.729624

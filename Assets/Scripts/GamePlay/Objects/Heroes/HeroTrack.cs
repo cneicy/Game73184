@@ -10,6 +10,7 @@ namespace GamePlay.Objects.Heroes
         private Map _map;
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
+        [SerializeField] private CapsuleCollider2D capsuleCollider;
         
         public float moveSpeed;
         private List<Vector2> _pathPoints;
@@ -29,6 +30,26 @@ namespace GamePlay.Objects.Heroes
         {
             if (EventManager.Instance)
                 EventManager.Instance.UnregisterAllEventsForObject(this);
+        }
+        
+        [EventSubscribe("PowerOff")]
+        public object OnPowerOff(string a)
+        {
+            capsuleCollider.gameObject.SetActive(false);
+            return null;
+        }
+
+        [EventSubscribe("PowerOn")]
+        public object OnPowerOn(string a)
+        {
+            Invoke(nameof(PowerOnDelay),0.01f);
+            return null;
+        }
+
+        private void PowerOnDelay()
+        {
+            if(GameManager.Instance.GameState == GameState.Playing)
+                capsuleCollider.gameObject.SetActive(true);
         }
 
         [EventSubscribe("AttackHero")]
@@ -67,6 +88,7 @@ namespace GamePlay.Objects.Heroes
         [EventSubscribe("PowerOn")]
         public object GameStart(string anyway)
         {
+            if(GameManager.Instance.GameState == GameState.GameOver) return null;
             Invoke(nameof(LoadPath),0.1f);
             return null;
         }
