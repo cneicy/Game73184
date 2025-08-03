@@ -30,7 +30,6 @@ namespace GamePlay.HandCard
         private float _maskProportion;
         
         private Coroutine _flipBackCoroutine;
-        public float flipBackDelay = 2f;
         private void Start()
         {
             isFlipped = false;

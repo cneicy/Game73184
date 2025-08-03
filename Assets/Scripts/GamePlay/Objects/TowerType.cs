@@ -7,6 +7,10 @@
         Mirror,
         CompetitiveFulcrum,
         BlindEye,
-        GhostNeedle
+        GhostNeedle,
+        Singularity,//奇点
+        Counter, //计数器
+        Ghost, //魂块
+        Recorder //补录器
     }
 }
