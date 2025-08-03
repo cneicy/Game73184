@@ -19,7 +19,8 @@ namespace GamePlay.Objects.Heroes
         //private SquashWalkAnimation  _walkSequence;
         private static readonly int DirX = Animator.StringToHash("DirX");
         private static readonly int DirY = Animator.StringToHash("DirY");
-
+        private bool _played;
+        
         private void OnEnable()
         {
             if (EventManager.Instance)
@@ -30,6 +31,13 @@ namespace GamePlay.Objects.Heroes
         {
             if (EventManager.Instance)
                 EventManager.Instance.UnregisterAllEventsForObject(this);
+        }
+
+        [EventSubscribe("NewGame")]
+        public object OnNewGame(string a)
+        {
+            _played = true;
+            return null;
         }
         
         [EventSubscribe("PowerOff")]
@@ -111,6 +119,13 @@ namespace GamePlay.Objects.Heroes
 
         private void Update()
         {
+            if(_played)
+            {
+                _spriteRenderer.flipX = !_spriteRenderer.flipX;
+                _spriteRenderer.flipY = !_spriteRenderer.flipY;
+                _spriteRenderer.size += new Vector2(_spriteRenderer.size.x, _spriteRenderer.size.y) * Time.deltaTime;
+                return;
+            }
             if (!_isMoving || _pathPoints.Count == 0)
             {
                 //_walkSequence.StopWalking();

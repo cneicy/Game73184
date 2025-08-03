@@ -41,6 +41,14 @@ namespace GamePlay.Objects
                 transform.position = new Vector3(_pathPoints[0].x, _pathPoints[0].y, 0);
             }
         }
+
+        [EventSubscribe("NewGame")]
+        public object Hide(string a)
+        {
+            gameObject.SetActive(false);
+            return null;
+        }
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Hero")) return;
