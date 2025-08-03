@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using Event;
 using UnityEngine;
 
 namespace GamePlay.Objects.Towers
@@ -12,15 +13,16 @@ namespace GamePlay.Objects.Towers
         private Transform _target;
         private Slot _targetSlot;
         public Ease rotationEase;
-        Sequence rotationSequence;
+        private Sequence _rotationSequence;
         public Ease moveEase; 
         public float moveDelayAfterRotation; 
         private GhostNeedle _ghostNeedle;
+        private int _blockFlies;
 
         private void Start()
         {
             rotationEase = Ease.OutBack;
-            rotationSequence = DOTween.Sequence();
+            _rotationSequence = DOTween.Sequence();
             moveEase = Ease.InOutSine; 
             moveDelayAfterRotation = 0.1f;
             
@@ -28,40 +30,55 @@ namespace GamePlay.Objects.Towers
             map = parentSlot.map;
             foreach (var slot in map.Region)
             {
-                if (slot.needleTarget)
-                {
-                    _targetSlot = slot;
-                    _target = slot.transform;
-                }
+                if (!slot.needleTarget) continue;
+                _targetSlot = slot;
+                _target = slot.transform;
             }
             Shoot();
-            Destroy(this);
         }
 
         private void Shoot()
         {
-            if (_target == null) return;
+            if (!_target) return;
             
             Vector2 direction = _target.position - transform.position;
-            float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            var targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             
-            rotationSequence?.Kill();
-            rotationSequence = DOTween.Sequence();
+            _rotationSequence?.Kill();
+            _rotationSequence = DOTween.Sequence();
         
             
-            rotationSequence.Append(
+            _rotationSequence.Append(
                 transform.DORotate(new Vector3(0, 0, targetAngle), 0.25f)
                     .SetEase(rotationEase));
             
-            rotationSequence.Append(transform.DOMove(_target.transform.position, 1.25f)
+            _rotationSequence.Append(transform.DOMove(_target.transform.position, 1.25f)
                 .SetEase(moveEase)
                 .SetDelay(moveDelayAfterRotation));
             
+            _rotationSequence.OnComplete(() => {
+                Destroy(gameObject);
+            });
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Road") || other.CompareTag("Slot"))
+            {
+                _blockFlies++;
+                Debug.Log(_blockFlies);
+            }
+            if (other.CompareTag("Hero"))
+            {
+                EventManager.Instance.TriggerEvent("AttackHero", new TowerAttack(DamageType.Normal, _blockFlies * 60));
+                _rotationSequence?.Kill();
+                Destroy(gameObject);
+            }
         }
 
         private void OnDestroy()
         {
-            if (_target.GetComponentInChildren<GhostNeedle>()!=null)
+            if (_target && _target.GetComponentInChildren<GhostNeedle>())
             {
                 _target.GetComponentInChildren<GhostNeedle>().DestroyItself();
             }
