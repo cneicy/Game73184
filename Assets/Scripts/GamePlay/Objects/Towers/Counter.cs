@@ -1,4 +1,5 @@
 using System;
+using Event;
 using UnityEngine;
 
 namespace GamePlay.Objects.Towers
@@ -18,7 +19,7 @@ namespace GamePlay.Objects.Towers
         {
             Painting();
         }
-
+        
         private void Painting()
         {
             for (int y1= 0; y1 < 9; y1+=2)

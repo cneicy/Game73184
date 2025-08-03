@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -8,31 +9,37 @@ using UnityEngine.Splines;
 namespace GamePlay.HandCard
 {
     
-    public class CardCurve : MonoBehaviour
+    public class CardCurve1 : MonoBehaviour
     {
         [SerializeField] private int maxHandSize;
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private SplineContainer splineContainer;
         [SerializeField] private Transform spawnPoint;
-        [SerializeField] private List<Card> cardsList = new();
-        private List<GameObject> _handCards = new();
-        private Vector3 _difPos = new(-6,-12,0);
-        private bool _isDrawing;
+        [SerializeField] private List<Card> cardsList = new List<Card>();
+        private List<GameObject> _handCards = new List<GameObject>();
+        private Vector3 _difPos = new Vector3(-6,-12,0);
+        private bool _isDrawing = false;
         private bool _isHiding;
 
-        [EventSubscribe("PowerOn")]
-        public object StartCardAnimation(string s = "")
+        public void Update()
         {
-            StartCoroutine(nameof(DrawAllCard));
-            return null;
+            
         }
 
-        /*[EventSubscribe("PowerOff")]
+        [EventSubscribe("PowerOn")]
+        public void StartCardAnimation()
+        {
+            StartCoroutine("DrawAllCard");
+        }
+
+        [EventSubscribe("PowerOff")]
         public object HideCardAnimation(string s = "")
         {
+            StopCoroutine(nameof(DrawAllCard));
+            StopCoroutine(nameof(HideAllCard));
             StartCoroutine(nameof(HideAllCard));
             return null;
-        }*/
+        }
         
         private void OnEnable()
         {
