@@ -12,6 +12,7 @@ namespace GamePlay
         [SerializeField] private GameObject towerGameObject;
         public Map map;
         private SpriteRenderer _spriteRenderer;
+        public bool isCounter;
         
         //防御塔效果
         public bool needleTarget;
@@ -77,7 +78,7 @@ namespace GamePlay
         public void OnHoverExit()
         {
             print("鼠标退出地块");
-            _spriteRenderer.color = Color.white;
+            _spriteRenderer.color =isCounter ? Color.red : Color.white; ;
         }
     }
 }

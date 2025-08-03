@@ -30,11 +30,6 @@ namespace GamePlay.Objects.Towers
                 }
             }
         }
-
-        public void DestroyItself()
-        {
-            Destroy(this.gameObject);
-        }
         
         private void OnDestroy()
         {
