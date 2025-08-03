@@ -12,7 +12,7 @@ namespace GamePlay.Objects.Towers
         
         private void OnEnable()
         {
-            parentSlot = GetComponentsInParent<Slot>()[1];
+            parentSlot = GetComponentsInParent<Slot>()[0];
             map = parentSlot.map;
             ShootNeedle();
         }
@@ -28,11 +28,16 @@ namespace GamePlay.Objects.Towers
             {
                 if (!slot.IsOccupied)
                 {
-                    Instantiate(needle, slot.transform.position, Quaternion.identity);
+                    Instantiate(needle, slot.transform.position, Quaternion.identity,slot.transform);
                 }
             }
         }
 
+        public void DestroyItself()
+        {
+            Destroy(this.gameObject);
+        }
+        
         private void OnDestroy()
         {
             parentSlot.needleTarget = false;

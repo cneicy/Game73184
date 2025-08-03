@@ -12,7 +12,6 @@ namespace GamePlay
         public bool isOuterSlot;        // 是否是外部slot（道路外部区域）
         public bool IsOccupied => placedUnit != null; // 是否已被占用
         [SerializeField] private GameObject towerGameObject;
-        [SerializeField] private GameObject shadowGameObject;
         public Map map;
         private SpriteRenderer _spriteRenderer;
         
@@ -41,7 +40,6 @@ namespace GamePlay
             if (BuildingSystem.Instance.state == BuildingSystem.BuiltState.Building)
             {
                 towerGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;
-                shadowGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;
             }
         }
 
