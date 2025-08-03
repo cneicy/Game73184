@@ -1,9 +1,6 @@
-using System;
 using GamePlay.Objects;
-using GamePlay.Objects.Towers;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 
 namespace GamePlay.HandCard
 {
