@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Event;
-using GamePlay.Objects.Heroes;
 using UnityEngine;
 
 namespace GamePlay.Objects
@@ -9,12 +8,14 @@ namespace GamePlay.Objects
     {
         private Map _map;
         private List<Vector2> _pathPoints;
+        private bool _isSecondTime;
 
         [EventSubscribe("PowerOn")]
         public object GameStart(string anyway)
         {
-            Debug.Log("Cas");
+            if(GameManager.Instance.GameState == GameState.GameOver) return null;
             Invoke(nameof(Spawn),0.1f);
+            _isSecondTime = false;
             return null;
         }
         
@@ -43,9 +44,11 @@ namespace GamePlay.Objects
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Hero")) return;
-            var temp = other.GetComponent<Hero>();
-            Debug.Log($"Hero HP Left:{temp.Health}");
-            temp.Health = Hero.MaxHealth;
+            {
+                if (_isSecondTime)
+                    EventManager.Instance.TriggerEvent("RePlay", "1");
+                else _isSecondTime = true;
+            }
         }
     }
 }

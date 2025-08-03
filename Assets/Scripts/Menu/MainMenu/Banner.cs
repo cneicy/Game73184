@@ -1,4 +1,5 @@
 using Event;
+using GamePlay;
 using UnityEngine;
 
 namespace Menu.MainMenu
@@ -18,7 +19,7 @@ namespace Menu.MainMenu
                 EventManager.Instance.UnregisterAllEventsForObject(this);
         }
 
-        [EventSubscribe("PowerButtonClick")]
+        [EventSubscribe("PowerOff")]
         public object Hide(string anyway)
         {
             banner.SetActive(false);

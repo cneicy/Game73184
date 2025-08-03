@@ -7,7 +7,7 @@ namespace Menu.Credit
     public class CreditPanel : MonoBehaviour
     {
         [SerializeField] private TextScroll textScroll;
-        
+        [SerializeField] private GameObject tipText;
         private void OnEnable()
         {
             if(EventManager.Instance)
@@ -26,6 +26,7 @@ namespace Menu.Credit
             TVPowerController.Instance.TurnOffTV();
             EventManager.Instance.TriggerEvent("OpenCredit","");
             textScroll.gameObject.SetActive(true);
+            Invoke(nameof(Hide),2f);
             return null;
         }
 
@@ -38,8 +39,13 @@ namespace Menu.Credit
         public void SpeedUp()
         {
             textScroll.ScrollSpeed = 120;
+            Hide();
         }
 
+        private void Hide()
+        {
+            tipText.SetActive(false);
+        }
         public void ResetSpeed()
         {
             textScroll.ScrollSpeed = 30;

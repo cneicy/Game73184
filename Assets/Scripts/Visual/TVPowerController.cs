@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Event;
+using GamePlay;
 using UnityEngine;
 using UnityEngine.UI;
 using Singleton;
@@ -41,6 +42,7 @@ namespace Visual
             FirstStart();
         }
 
+        [EventSubscribe("NewGame")]
         public object FirstStart(string anyway ="")
         {
             if (!rawImage.material)
@@ -73,7 +75,6 @@ namespace Visual
             {
                 TurnOnTV();
                 star.SetActive(true);
-                EventManager.Instance.TriggerEvent("PowerOn","114514");
             }
 
             _isOn = !_isOn;
@@ -81,7 +82,22 @@ namespace Visual
         }
 
         [EventSubscribe("GameOver")]
-        public object TurnOffTV(string anyway = "")
+        public object GameOver(string anyway = "")
+        {
+            TurnOffTV();
+            _isOn = false;
+            return null;
+        }
+
+        [EventSubscribe("RePlay")]
+        public object RePlay(string anyway = "")
+        {
+            TurnOffTV();
+            _isOn = false;
+            return null;
+        }
+        
+        public void TurnOffTV()
         {
             var turnOffSequence = DOTween.Sequence();
             
@@ -104,9 +120,12 @@ namespace Visual
                         1, transitionDuration)
                     .SetEase(Ease.InOutQuad);
             });
-
+            EventManager.Instance.TriggerEvent("PowerOff", "");
+            if (GameManager.Instance.GameState == GameState.FirstStart)
+            {
+                EventManager.Instance.TriggerEvent("Tutorial", "");
+            }
             turnOffSequence.Play();
-            return null;
         }
 
         public void TurnOnTV()
@@ -137,7 +156,11 @@ namespace Visual
                         0.03f, transitionDuration)
                     .SetEase(Ease.InOutQuad);
             });
-            
+            EventManager.Instance.TriggerEvent("PowerOn","114514");
+            if (GameManager.Instance.GameState == GameState.Tutorial)
+            {
+                EventManager.Instance.TriggerEvent("GameStart", "");
+            }
             turnOnSequence.Play();
         }
 

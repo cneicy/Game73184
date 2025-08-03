@@ -98,6 +98,7 @@ namespace GamePlay
         [EventSubscribe("PowerOn")]
         public object GameStart(string anyway)
         {
+            if(GameManager.Instance.GameState == GameState.GameOver) return null;
             _size = new Vector2Int(_schema.GetLength(2), _schema.GetLength(1));
 
             Debug.Log($"地图尺寸: {_size.x}x{_size.y}, 当前地图索引: {currentMapIndex}");
@@ -350,21 +351,34 @@ namespace GamePlay
                 }
             }
         }
-        
+
         [EventSubscribe("GameOver")]
-        public object ClearMap(string anyway = "")
+        public object OnGameOver(string sa)
         {
-            if (MapSchema == null) return null;
+            ClearMap();
+            return null;
+        }
+
+        [EventSubscribe("RePlay")]
+        public object OnRePlay(string a)
+        {
+            ClearMap();
+            return null;
+        }
+        
+        
+        public void ClearMap()
+        {
+            if (MapSchema == null) return;
 
             foreach (var go in MapSchema)
                 if (go)
-                    DestroyImmediate(go);
+                    Destroy(go);
             foreach (var go in allSlots.Where(go => go))
             {
-                DestroyImmediate(go.gameObject);
+                Destroy(go.gameObject);
             }
             allSlots.Clear();
-            return null;
         }
 
         public void SwitchToMap(int mapIndex)
