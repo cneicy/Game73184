@@ -186,4 +186,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridPosition: {x: 0, y: 0}
   placedUnit: {fileID: 0}
+  shadowPlacedUnit: {fileID: 0}
   isOuterSlot: 0
+  towerGameObject: {fileID: 0}
+  shadowGameObject: {fileID: 0}
+  map: {fileID: 0}

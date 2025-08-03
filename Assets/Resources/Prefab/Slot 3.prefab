@@ -100,10 +100,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridPosition: {x: 0, y: 0}
   placedUnit: {fileID: 0}
+  shadowPlacedUnit: {fileID: 0}
   isOuterSlot: 0
-  isBuilding: 0
   towerGameObject: {fileID: 6040423129606557633, guid: f18989641a9039e439a1dbde3af7db67, type: 3}
   shadowGameObject: {fileID: 0}
+  map: {fileID: 0}
 --- !u!61 &-1417253750562085794
 BoxCollider2D:
   m_ObjectHideFlags: 0

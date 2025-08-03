@@ -37,6 +37,7 @@ namespace GamePlay.HandCard
             _localTransform = transform;
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
+        
 
         public void UpdateCardData(Card cardData)
         {
@@ -67,6 +68,12 @@ namespace GamePlay.HandCard
             CardEffect.Instance.MouseExit(_cardLocalPosition,_localTransform,_spriteRenderer);
         }
 
+
+        public void Waitting()
+        {
+            CardEffect.Instance.MouseExit(_cardLocalPosition,_localTransform,_spriteRenderer);
+        }
+        
         public void AfterBuilt()
         {
             CardEffect.Instance.CardFlip(isFlipped,transform);
@@ -98,10 +105,10 @@ namespace GamePlay.HandCard
             if (BuildingSystem.Instance.state==BuildingSystem.BuiltState.Waiting)
             {
                 BuildingSystem.Instance.NowCard = this;
-                BuildingSystem.Instance.state = BuildingSystem.BuiltState.Building;
+                BuildingSystem.Instance.ChangeStateToBuilding();
             }
             
-            /*if (!_isSelected)
+            if (!_isSelected)
             {
                 _cardLocalPosition = transform.localPosition;
                 CardEffect.Instance.MouseEnter(_cardLocalPosition,_localTransform,_spriteRenderer);
@@ -112,7 +119,7 @@ namespace GamePlay.HandCard
                 _cardLocalPosition = transform.localPosition;
                 CardEffect.Instance.MouseExit(_cardLocalPosition,_localTransform,_spriteRenderer);
                 _isSelected = false;
-            }*/
+            }
         }
 
         public void OnHoverEnter()
