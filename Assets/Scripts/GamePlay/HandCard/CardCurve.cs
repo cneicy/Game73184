@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -20,11 +21,12 @@ namespace GamePlay.HandCard
         private Vector3 _difPos = new Vector3(-6,-12,0);
         private bool _isDrawing = false;
 
+
         private void Update()
         {
             if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
             {
-                /*StartCoroutine(DrawAllCard());*/
+                StartCardAnimation();
             }
         }
 
@@ -41,7 +43,7 @@ namespace GamePlay.HandCard
             _isDrawing = true;
             
             // 计算需要补充的卡牌数量
-            int cardsToDraw = cardsList.Count;
+            int cardsToDraw = 5;
             
             for (int i = 0; i < cardsToDraw; i++)
             {
@@ -75,6 +77,7 @@ namespace GamePlay.HandCard
                 Quaternion rotation = Quaternion.LookRotation(up,Vector3.Cross(up,forward).normalized);
                 _handCards[i].transform.DOMove(splinePosition+_difPos, 0.25f);
                 _handCards[i].transform.DORotateQuaternion(rotation, 0.25f);
+                BuildingSystem.Instance.handCards.Add(_handCards[i].GetComponent<Card>());
             }
             UpdateCardData();
         }

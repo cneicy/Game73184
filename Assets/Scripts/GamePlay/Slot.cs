@@ -7,13 +7,14 @@ namespace GamePlay
     public class Slot : MonoBehaviour,IInteractable,IHoverable
     {
         public Vector2Int gridPosition; // 在地图网格中的位置
-        public GameObject placedUnit;    // 放置在slot上的单位
+        public GameObject placedUnit; // 放置在slot上的单位
+        public GameObject shadowPlacedUnit;
         public bool isOuterSlot;        // 是否是外部slot（道路外部区域）
         public bool IsOccupied => placedUnit != null; // 是否已被占用
-        public bool isBuilding;
         [SerializeField] private GameObject towerGameObject;
         [SerializeField] private GameObject shadowGameObject;
         public Map map;
+        private SpriteRenderer _spriteRenderer;
     
         // 放置单位到slot
         public bool PlaceUnit(GameObject unit)
@@ -30,21 +31,14 @@ namespace GamePlay
         private void OnEnable()
         {
             map = GetComponentInParent<Map>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
-
-        private void Start()
-        {
-            
-        }
-
         private void Update()
         {
             if (BuildingSystem.Instance.state == BuildingSystem.BuiltState.Building)
             {
                 towerGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;
-                /*shadowGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;*/
-                /*Color alpha = shadowGameObject.GetComponent<SpriteRenderer>().color;*/
-                /*shadowGameObject.GetComponent<SpriteRenderer>().color = new Color(alpha.r, alpha.g, alpha.b, 0.65f);*/
+                shadowGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;
             }
         }
 
@@ -60,25 +54,31 @@ namespace GamePlay
         }
         public void Interact()
         {
-            if (isBuilding)
-            {
-                Instantiate(towerGameObject,transform.position,transform.localRotation,transform);
+            if (BuildingSystem.Instance.state == BuildingSystem.BuiltState.Building&&!IsOccupied)
+            { 
+                placedUnit = Instantiate(towerGameObject,transform.position,transform.localRotation,transform);
+                BuildingSystem.Instance.ChangeChargingIndex(1);
+                if (BuildingSystem.Instance.NowCard.nowChargingIndex == 0)
+                {
+                    BuildingSystem.Instance.ChangeStateToWaiting();
+                }
             }
             print("建造");
         }
 
         public void OnHoverEnter()
         {
-            /*if (isBuilding)
+            if (BuildingSystem.Instance.state== BuildingSystem.BuiltState.Building)
             { 
-                Instantiate(shadowGameObject,transform.position,transform.localRotation,transform);
-            }*/
+                _spriteRenderer.color = Color.cyan;
+            }
             print("该地块位于"+gridPosition.ToString());
         }
 
         public void OnHoverExit()
         {
-            /*print("鼠标退出地块");*/
+            print("鼠标退出地块");
+            _spriteRenderer.color = Color.white;
         }
     }
 }

@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 117883826}
   - component: {fileID: 117883825}
   - component: {fileID: 117883827}
+  - component: {fileID: 117883828}
   m_Layer: 0
   m_Name: PostPocessing1
   m_TagString: Untagged
@@ -307,6 +308,26 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &117883828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117883818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f32a18ddb9c2614c9a4f2008f46f802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  postProcessingCamera: {fileID: 117883823}
+  showDebugRays: 1
+  rayColor: {r: 1, g: 0, b: 0, a: 1}
+  hitColor: {r: 0, g: 1, b: 0, a: 1}
+  hoverColor: {r: 0.2, g: 0.6, b: 1, a: 1}
+  gizmoSize: 0.2
+  verboseDebug: 1
+  hoverCheckInterval: 0.05
 --- !u!1 &285169483
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +488,8 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: 1241273606, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  ChargingIndex: 1
+  maxChargingIndex: 1
+  nowChargingIndex: 0
 --- !u!1 &310300710
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,11 +942,69 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450179607}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20f964fe79924a608ba926ce097eeb87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  postProcessVolume: {fileID: 0}
+  hueShiftCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxHueShift: 180
+  transitionDuration: 0.5
+  baseFloatSpeed: 1
+  floatIntensityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxFloatIntensity: 30
+  randomIntensity: 0.5
+  minChromaticAberration: 0.2
+  maxChromaticAberration: 0.4
+  minLensDistortion: 17
+  maxLensDistortion: 22
 --- !u!1 &481058668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,7 +1764,8 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: 1311363702, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  ChargingIndex: 2
+  maxChargingIndex: 0
+  nowChargingIndex: 0
 --- !u!1 &839971589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1874,7 +1955,8 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: 1618707750, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  ChargingIndex: 1
+  maxChargingIndex: 0
+  nowChargingIndex: 0
 --- !u!1 &922895731
 GameObject:
   m_ObjectHideFlags: 0
@@ -2923,6 +3005,7 @@ GameObject:
   - component: {fileID: 1604077376}
   - component: {fileID: 1604077375}
   - component: {fileID: 1604077377}
+  - component: {fileID: 1604077378}
   m_Layer: 0
   m_Name: PostPocessing
   m_TagString: Untagged
@@ -3120,6 +3203,26 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &1604077378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604077368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f32a18ddb9c2614c9a4f2008f46f802, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  postProcessingCamera: {fileID: 1604077370}
+  showDebugRays: 1
+  rayColor: {r: 1, g: 0, b: 0, a: 1}
+  hitColor: {r: 0, g: 1, b: 0, a: 1}
+  hoverColor: {r: 0.2, g: 0.6, b: 1, a: 1}
+  gizmoSize: 0.2
+  verboseDebug: 1
+  hoverCheckInterval: 0.05
 --- !u!82 &1667225168 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6615410642108763330, guid: bbae721fb050f964b9648c70f5c30a45, type: 3}
@@ -3722,7 +3825,8 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  ChargingIndex: 1
+  maxChargingIndex: 0
+  nowChargingIndex: 0
 --- !u!1 &1701878322
 GameObject:
   m_ObjectHideFlags: 0
@@ -4275,7 +4379,8 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: -1226726504, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  ChargingIndex: 1
+  maxChargingIndex: 0
+  nowChargingIndex: 0
 --- !u!1 &2097515982
 GameObject:
   m_ObjectHideFlags: 0
@@ -4322,6 +4427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   map: {fileID: 1443612906}
+  NowCard: {fileID: 0}
 --- !u!1001 &231237738288923606
 PrefabInstance:
   m_ObjectHideFlags: 0

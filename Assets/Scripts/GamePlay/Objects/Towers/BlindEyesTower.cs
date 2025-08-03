@@ -28,7 +28,25 @@ namespace GamePlay.Objects.Towers
             {
                 for (int x1 = x-1; x1 < x+2; x1++)
                 {
-                    _map.Region[x1,y1].GetComponent<SpriteRenderer>().color = Color.black;
+                    int x2 = Mathf.Clamp(x1, 0, 11);  
+                    int y2 = Mathf.Clamp(y1, 0, 8);  
+                    _map.Region[x2,y2].GetComponent<SpriteRenderer>().color = Color.black;
+                }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            int x = _parentSlot.gridPosition.x;
+            int y = _parentSlot.gridPosition.y;
+
+            for (int y1= y-1; y1 < y+2; y1++)
+            {
+                for (int x1 = x-1; x1 < x+2; x1++)
+                {
+                    int x2 = Mathf.Clamp(x1, 0, 11);  
+                    int y2 = Mathf.Clamp(y1, 0, 8);  
+                    _map.Region[x2,y2].GetComponent<SpriteRenderer>().color = Color.white;
                 }
             }
         }
