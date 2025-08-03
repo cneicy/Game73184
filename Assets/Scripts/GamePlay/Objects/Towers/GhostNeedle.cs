@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace GamePlay.Objects.Towers
 {
-    public class GhostNeedle : MonoBehaviour
+    public class GhostNeedle : AbstractTower
     {
         [SerializeField]private Slot parentSlot;
         [SerializeField]private Map map;
@@ -39,6 +39,10 @@ namespace GamePlay.Objects.Towers
         private void OnDestroy()
         {
             parentSlot.needleTarget = false;
+        }
+
+        protected override void Move()
+        {
         }
     }
 }

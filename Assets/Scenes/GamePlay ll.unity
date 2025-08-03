@@ -4141,7 +4141,7 @@ GameObject:
   - component: {fileID: 955175366}
   - component: {fileID: 955175367}
   m_Layer: 5
-  m_Name: Card1 (4)
+  m_Name: BlindEye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4181,11 +4181,11 @@ MonoBehaviour:
   _cardLocalPosition: {x: 0, y: 0, z: 0}
   isFlipped: 0
   TowerType: 4
-  Cost: 0
   TowerPrefab: {fileID: 4424409528615533993, guid: ee2ff3f12ac4f2d4ebfe31bde191671b, type: 3}
   CanBuildOnRoad: 0
   CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 0
   maxChargingIndex: 0
   nowChargingIndex: 0
 --- !u!1 &964207649
@@ -4467,7 +4467,7 @@ GameObject:
   - component: {fileID: 1009777864}
   - component: {fileID: 1009777865}
   m_Layer: 5
-  m_Name: Card1 (1)
+  m_Name: Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4506,12 +4506,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardLocalPosition: {x: 0, y: 0, z: 0}
   isFlipped: 0
-  TowerType: 1
-  Cost: 2
+  TowerType: 8
   TowerPrefab: {fileID: 4424409528615533993, guid: bd5a2ab70c4092c4ea11e44b49349fe5, type: 3}
   CanBuildOnRoad: 0
   CardFace: {fileID: 1311363702, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 0
   maxChargingIndex: 0
   nowChargingIndex: 0
 --- !u!1 &1013341357
@@ -5053,7 +5053,7 @@ GameObject:
   - component: {fileID: 1112819867}
   - component: {fileID: 1112819868}
   m_Layer: 5
-  m_Name: Card1 (3)
+  m_Name: Counter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5092,12 +5092,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardLocalPosition: {x: 0, y: 0, z: 0}
   isFlipped: 0
-  TowerType: 3
-  Cost: 0
+  TowerType: 7
   TowerPrefab: {fileID: 4424409528615533993, guid: 061bebd46cd05ff498d1f87da15c2a17, type: 3}
   CanBuildOnRoad: 0
   CardFace: {fileID: -1226726504, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 0
   maxChargingIndex: 0
   nowChargingIndex: 0
 --- !u!1 &1130035713
@@ -9708,7 +9708,7 @@ GameObject:
   - component: {fileID: 1906893076}
   - component: {fileID: 1906893077}
   m_Layer: 5
-  m_Name: Card1 (2)
+  m_Name: Singularity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9747,13 +9747,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardLocalPosition: {x: 0, y: 0, z: 0}
   isFlipped: 0
-  TowerType: 2
-  Cost: 3
-  TowerPrefab: {fileID: 4424409528615533993, guid: 299701d40818c074484a1eeb47ce1d06, type: 3}
+  TowerType: 6
+  TowerPrefab: {fileID: 4731442044859491187, guid: bfd6c2de0ef88b147b8567ad3dae6251, type: 3}
   CanBuildOnRoad: 0
   CardFace: {fileID: 1618707750, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  maxChargingIndex: 0
+  cd: 999
+  maxChargingIndex: 1
   nowChargingIndex: 0
 --- !u!1 &1912559153
 GameObject:
@@ -9802,7 +9802,7 @@ GameObject:
   - component: {fileID: 1921081983}
   - component: {fileID: 1921081984}
   m_Layer: 5
-  m_Name: Card1
+  m_Name: Recorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9842,11 +9842,11 @@ MonoBehaviour:
   _cardLocalPosition: {x: 0, y: 0, z: 0}
   isFlipped: 0
   TowerType: 0
-  Cost: 1
   TowerPrefab: {fileID: 4424409528615533993, guid: 51d8073c83e21874d94249df078a0674, type: 3}
   CanBuildOnRoad: 0
   CardFace: {fileID: 1241273606, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 0
   maxChargingIndex: 0
   nowChargingIndex: 0
 --- !u!1 &1963395496
@@ -9860,7 +9860,7 @@ GameObject:
   - component: {fileID: 1963395497}
   - component: {fileID: 1963395498}
   m_Layer: 5
-  m_Name: Card1 (5)
+  m_Name: GhostNeedle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9900,11 +9900,11 @@ MonoBehaviour:
   _cardLocalPosition: {x: 0, y: 0, z: 0}
   isFlipped: 0
   TowerType: 5
-  Cost: 0
   TowerPrefab: {fileID: 4424409528615533993, guid: e5a1d51088f60604b921f8032cd68472, type: 3}
   CanBuildOnRoad: 0
   CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 1
   maxChargingIndex: 1
   nowChargingIndex: 0
 --- !u!1 &1994248501
