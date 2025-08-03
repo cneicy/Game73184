@@ -27,16 +27,8 @@ namespace GamePlay
             switch (state)
             {
                 case BuiltState.Waiting:
-                    foreach (var slot in map.allSlots)
-                    {
-                        slot.isBuilding = false;
-                    }
                     break;
                 case BuiltState.Building:
-                    foreach (var slot in map.allSlots)
-                    {
-                        slot.isBuilding = true;
-                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -51,6 +43,18 @@ namespace GamePlay
                 {
                     state = BuiltState.Waiting;
                 }
+            }
+        }
+
+        public void ChangeChargingIndex(int index)
+        {
+            if (NowCard.nowChargingIndex>=1)
+            {
+                NowCard.nowChargingIndex -= index;
+            }
+            else
+            {
+                //进入冷却，遮罩移除,卡牌翻面
             }
         }
     }

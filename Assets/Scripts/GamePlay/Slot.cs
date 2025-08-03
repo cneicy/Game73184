@@ -10,7 +10,6 @@ namespace GamePlay
         public GameObject placedUnit;    // 放置在slot上的单位
         public bool isOuterSlot;        // 是否是外部slot（道路外部区域）
         public bool IsOccupied => placedUnit != null; // 是否已被占用
-        public bool isBuilding;
         [SerializeField] private GameObject towerGameObject;
         [SerializeField] private GameObject shadowGameObject;
         public Map map;
@@ -42,6 +41,7 @@ namespace GamePlay
             if (BuildingSystem.Instance.state == BuildingSystem.BuiltState.Building)
             {
                 towerGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;
+                
                 /*shadowGameObject = BuildingSystem.Instance.NowCard.TowerPrefab;*/
                 /*Color alpha = shadowGameObject.GetComponent<SpriteRenderer>().color;*/
                 /*shadowGameObject.GetComponent<SpriteRenderer>().color = new Color(alpha.r, alpha.g, alpha.b, 0.65f);*/
@@ -60,9 +60,13 @@ namespace GamePlay
         }
         public void Interact()
         {
-            if (isBuilding)
+            if (BuildingSystem.Instance.state == BuildingSystem.BuiltState.Building)
             {
                 Instantiate(towerGameObject,transform.position,transform.localRotation,transform);
+                if (BuildingSystem.Instance.NowCard.nowChargingIndex == 0)
+                {
+                    BuildingSystem.Instance.state = BuildingSystem.BuiltState.Waiting;
+                }
             }
             print("建造");
         }

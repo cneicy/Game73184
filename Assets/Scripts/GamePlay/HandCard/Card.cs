@@ -1,7 +1,9 @@
+using System;
 using GamePlay.Objects;
 using GamePlay.Objects.Towers;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace GamePlay.HandCard
 {
@@ -23,8 +25,10 @@ namespace GamePlay.HandCard
         public bool CanBuildOnRoad;
         public Sprite CardFace;
         public Sprite CardBack;
-        public int ChargingIndex;
-        
+        //充能
+        public float maxChargingIndex;
+        public float nowChargingIndex;
+        private float _maskProportion;
         private void Start()
         {
             isFlipped = false;
@@ -42,8 +46,17 @@ namespace GamePlay.HandCard
             CanBuildOnRoad = cardData.CanBuildOnRoad;
             CardFace = cardData.CardFace;
             CardBack = cardData.CardBack;
+            maxChargingIndex = cardData.maxChargingIndex;
+            LoadCardData();
         }
-        
+
+        private void LoadCardData()
+        {
+            //花费
+            //充能
+            nowChargingIndex = maxChargingIndex;
+        }
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             CardEffect.Instance.MouseEnter(_cardLocalPosition,_localTransform,_spriteRenderer);
@@ -64,12 +77,30 @@ namespace GamePlay.HandCard
         {
             
         }
+
+        private void Update()
+        {
+            if (BuildingSystem.Instance.state==BuildingSystem.BuiltState.Building)
+            {
+                nowChargingIndex = BuildingSystem.Instance.NowCard.nowChargingIndex;
+                _maskProportion = nowChargingIndex / maxChargingIndex;
+            }
+        }
+
+
+        public void ChangeMask()
+        {
+            
+        }
         
         public void Interact()
         {
-            BuildingSystem.Instance.NowCard = this;
-            AfterBuilt();
-            BuildingSystem.Instance.state = BuildingSystem.BuiltState.Building;
+            if (BuildingSystem.Instance.state==BuildingSystem.BuiltState.Waiting)
+            {
+                BuildingSystem.Instance.NowCard = this;
+                BuildingSystem.Instance.state = BuildingSystem.BuiltState.Building;
+            }
+            
             /*if (!_isSelected)
             {
                 _cardLocalPosition = transform.localPosition;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -20,11 +21,12 @@ namespace GamePlay.HandCard
         private Vector3 _difPos = new Vector3(-6,-12,0);
         private bool _isDrawing = false;
 
+
         private void Update()
         {
             if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
             {
-                /*StartCoroutine(DrawAllCard());*/
+                StartCardAnimation();
             }
         }
 

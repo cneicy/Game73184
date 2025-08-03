@@ -920,11 +920,69 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 450179607}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20f964fe79924a608ba926ce097eeb87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  postProcessVolume: {fileID: 0}
+  hueShiftCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxHueShift: 180
+  transitionDuration: 0.5
+  baseFloatSpeed: 1
+  floatIntensityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 1
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxFloatIntensity: 30
+  randomIntensity: 0.5
+  minChromaticAberration: 0.2
+  maxChromaticAberration: 0.4
+  minLensDistortion: 17
+  maxLensDistortion: 22
 --- !u!1 &481058668
 GameObject:
   m_ObjectHideFlags: 0
@@ -4322,6 +4380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   map: {fileID: 1443612906}
+  NowCard: {fileID: 0}
 --- !u!1001 &231237738288923606
 PrefabInstance:
   m_ObjectHideFlags: 0
