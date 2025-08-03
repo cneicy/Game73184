@@ -7,7 +7,7 @@ namespace GamePlay.Objects.Heroes
 {
     public class Hero : MonoBehaviour, IInteractable
     {
-        public static readonly int MaxHealth = 150000;
+        public static readonly int MaxHealth = 52500;
         [SerializeField] private ParticleSystem particles;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private int health;
