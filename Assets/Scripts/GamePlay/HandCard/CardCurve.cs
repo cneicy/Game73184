@@ -19,11 +19,17 @@ namespace GamePlay.HandCard
         private Vector3 _difPos = new(-6,-12,0);
         private bool _isDrawing;
         private bool _isHiding;
+        private bool show;
 
         [EventSubscribe("PowerOn")]
         public object StartCardAnimation(string s = "")
         {
-            StartCoroutine(nameof(DrawAllCard));
+            if(!show)
+            {
+                show = true;
+                StartCoroutine(nameof(DrawAllCard));
+            }
+            
             return null;
         }
 
