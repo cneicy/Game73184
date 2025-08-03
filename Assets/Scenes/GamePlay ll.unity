@@ -917,7 +917,8 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: 1241273606, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  ChargingIndex: 1
+  maxChargingIndex: 0
+  nowChargingIndex: 0
 --- !u!1 &326888530
 GameObject:
   m_ObjectHideFlags: 0
@@ -2981,7 +2982,8 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: 1311363702, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  ChargingIndex: 2
+  maxChargingIndex: 0
+  nowChargingIndex: 0
 --- !u!1 &839971589
 GameObject:
   m_ObjectHideFlags: 0
@@ -3206,7 +3208,8 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: 1618707750, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  ChargingIndex: 1
+  maxChargingIndex: 0
+  nowChargingIndex: 0
 --- !u!1 &929671895
 GameObject:
   m_ObjectHideFlags: 0
@@ -6786,7 +6789,8 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  ChargingIndex: 1
+  maxChargingIndex: 0
+  nowChargingIndex: 0
 --- !u!1 &1701878322
 GameObject:
   m_ObjectHideFlags: 0
@@ -7160,11 +7164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6195ff90765a6df4a97cf72dd3883862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!70 &1719086153 stripped
-CapsuleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 8196998488198310968, guid: bbae721fb050f964b9648c70f5c30a45, type: 3}
-  m_PrefabInstance: {fileID: 231237738288923606}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1719763513
 GameObject:
   m_ObjectHideFlags: 0
@@ -8125,7 +8124,8 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: -1226726504, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  ChargingIndex: 1
+  maxChargingIndex: 0
+  nowChargingIndex: 0
 --- !u!1 &2050560764
 GameObject:
   m_ObjectHideFlags: 0
@@ -8441,6 +8441,7 @@ MonoBehaviour:
   state: 0
   map: {fileID: 1443612906}
   NowCard: {fileID: 0}
+  handCards: []
 --- !u!1 &2099036476
 GameObject:
   m_ObjectHideFlags: 0
@@ -8717,10 +8718,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2524862396022110445, guid: bbae721fb050f964b9648c70f5c30a45, type: 3}
-      propertyPath: capsuleCollider
-      value: 
-      objectReference: {fileID: 1719086153}
     - target: {fileID: 4219343671306454210, guid: bbae721fb050f964b9648c70f5c30a45, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
