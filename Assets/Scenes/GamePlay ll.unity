@@ -4185,8 +4185,10 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 0
   maxChargingIndex: 0
   nowChargingIndex: 0
+  flipBackDelay: 2
 --- !u!1 &964207649
 GameObject:
   m_ObjectHideFlags: 0
@@ -4511,8 +4513,10 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: 1311363702, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 0
   maxChargingIndex: 0
   nowChargingIndex: 0
+  flipBackDelay: 2
 --- !u!1 &1013341357
 GameObject:
   m_ObjectHideFlags: 0
@@ -5097,8 +5101,10 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: -1226726504, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 0
   maxChargingIndex: 0
   nowChargingIndex: 0
+  flipBackDelay: 2
 --- !u!1 &1130035713
 GameObject:
   m_ObjectHideFlags: 0
@@ -9693,8 +9699,10 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: 1618707750, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 0
   maxChargingIndex: 0
   nowChargingIndex: 0
+  flipBackDelay: 2
 --- !u!1 &1912559153
 GameObject:
   m_ObjectHideFlags: 0
@@ -9787,8 +9795,10 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: 1241273606, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 0
   maxChargingIndex: 0
   nowChargingIndex: 0
+  flipBackDelay: 2
 --- !u!1 &1963395496
 GameObject:
   m_ObjectHideFlags: 0
@@ -9845,8 +9855,10 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 1
   maxChargingIndex: 1
   nowChargingIndex: 0
+  flipBackDelay: 2
 --- !u!1 &1994248501
 GameObject:
   m_ObjectHideFlags: 0

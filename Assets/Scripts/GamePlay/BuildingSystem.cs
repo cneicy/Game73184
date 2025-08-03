@@ -60,7 +60,7 @@ namespace GamePlay
                 {
                     if (card.TowerType==NowCard.TowerType)
                     {
-                        card.AfterBuilt();
+                        card.AfterBuilt(NowCard.cd);
                     }
                 }
                 NowCard.nowChargingIndex -= index;
