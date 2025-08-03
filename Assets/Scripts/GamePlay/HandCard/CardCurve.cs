@@ -43,7 +43,7 @@ namespace GamePlay.HandCard
             _isDrawing = true;
             
             // 计算需要补充的卡牌数量
-            int cardsToDraw = 5;
+            int cardsToDraw = cardsList.Count;
             
             for (int i = 0; i < cardsToDraw; i++)
             {

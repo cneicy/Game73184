@@ -17,7 +17,6 @@ namespace GamePlay.HandCard
         private SpriteRenderer _spriteRenderer;
         private bool _isSelected;
         public bool isFlipped;
-        [SerializeField] private GameObject shadowTowerObj;
 
         public TowerType TowerType;
         public int Cost;
