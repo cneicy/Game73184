@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Event;
+using UnityEngine;
 using Visual;
 
 namespace Menu.Credit
@@ -7,11 +8,25 @@ namespace Menu.Credit
     {
         [SerializeField] private TextScroll textScroll;
         
+        private void OnEnable()
+        {
+            if(EventManager.Instance)
+                EventManager.Instance.RegisterEventHandlersFromAttributes(this);
+        }
+
+        private void OnDisable()
+        {
+            if(EventManager.Instance)
+                EventManager.Instance.UnregisterAllEventsForObject(this);
+        }
         
-        public void OpenCredit()
+        [EventSubscribe("GameOver")]
+        public object OpenCredit(string anyway)
         {
             TVPowerController.Instance.TurnOffTV();
+            EventManager.Instance.TriggerEvent("OpenCredit","");
             textScroll.gameObject.SetActive(true);
+            return null;
         }
 
         public void CloseCredit()
@@ -22,7 +37,7 @@ namespace Menu.Credit
 
         public void SpeedUp()
         {
-            textScroll.ScrollSpeed = 60;
+            textScroll.ScrollSpeed = 120;
         }
 
         public void ResetSpeed()
@@ -31,7 +46,7 @@ namespace Menu.Credit
         }
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.LeftShift) || UnityEngine.Input.GetKeyDown(KeyCode.RightShift))
+            if (UnityEngine.Input.GetKey(KeyCode.LeftShift) || UnityEngine.Input.GetKey(KeyCode.RightShift))
             {
                 SpeedUp();
             }

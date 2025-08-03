@@ -129,7 +129,8 @@ namespace GamePlay.Objects.Heroes
             if (!(health <= 0)) return;
             health = 0;
             Debug.Log("Hero死亡");
-            EventManager.Instance.TriggerEvent("HeroDead", "等待戈多");
+            EventManager.Instance.TriggerEvent("GameOver", "等待戈多");
+            gameObject.SetActive(false);
         }
 
         public void OnTriggerEnter2D(Collider2D other)

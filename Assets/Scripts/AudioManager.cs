@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using Event;
+using GamePlay;
 using GamePlay.Objects.Heroes;
 using Singleton;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private AudioSource[] heroHitAudioSource;
     [SerializeField] private AudioSource bgm;
     [SerializeField] private AudioSource powerClick;
+    [SerializeField] private AudioSource btnClick;
     private Hero _hero;
     
     [Header("BGM音高变化曲线")]
@@ -49,6 +51,19 @@ public class AudioManager : Singleton<AudioManager>
         _pitchTween?.Kill();
     }
 
+    [EventSubscribe("TurningNext")]
+    public object OnTurningNext(GameState gameState)
+    {
+        btnClick.Play();
+        return null;
+    }
+    [EventSubscribe("TurningPrevious")]
+    public object OnTurningPrevious(GameState gameState)
+    {
+        btnClick.Play();
+        return null;
+    }
+
     [EventSubscribe("PowerButtonClick")]
     public object OnPowerButtonClick(string anyway)
     {
@@ -60,6 +75,13 @@ public class AudioManager : Singleton<AudioManager>
     public object OnGameStart(string anyway)
     {
         bgm.Play();
+        return null;
+    }
+
+    [EventSubscribe("GameOver")]
+    public object OnGameOver(string anyway)
+    {
+        bgm.Stop();
         return null;
     }
 

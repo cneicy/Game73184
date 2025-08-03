@@ -6,7 +6,7 @@ using Singleton;
 
 namespace Visual
 {
-    public class TVPowerController1 : Singleton<TVPowerController1>
+    public class TVPowerController : Singleton<TVPowerController>
     {
         private static readonly int IsTurningOn = Shader.PropertyToID("_IsTurningOn");
         private static readonly int TransitionProgress = Shader.PropertyToID("_TransitionProgress");
@@ -14,13 +14,13 @@ namespace Visual
         private static readonly int Opacity = Shader.PropertyToID("_Opacity");
         private static readonly int PulseIntensity = Shader.PropertyToID("_PulseIntensity");
         private static readonly int PulseWidth = Shader.PropertyToID("_PulseWidth");
-        
+        private Tweener _shakeTween;
         public RawImage rawImage;
         public float transitionDuration = 0.3f;
         public float pulseIntensity = 5f;
         public float pulseWidth = 0.01f;
         public float onOpacity = 0.03f;
-
+        public GameObject star;
         private Material _material;
         private bool _isOn = true;
 
@@ -62,15 +62,17 @@ namespace Visual
         }
         
         [EventSubscribe("PowerButtonClick")]
-        public object TogglePower(string anyway)
+        public object TogglePower(string anyway = "")
         {
             if (_isOn)
             {
                 TurnOffTV();
+                star.SetActive(false);
             }
             else
             {
                 TurnOnTV();
+                star.SetActive(true);
                 EventManager.Instance.TriggerEvent("PowerOn","114514");
             }
 
@@ -78,11 +80,12 @@ namespace Visual
             return "114514";
         }
 
-        public void TurnOffTV()
+        [EventSubscribe("GameOver")]
+        public object TurnOffTV(string anyway = "")
         {
             var turnOffSequence = DOTween.Sequence();
             
-            turnOffSequence.AppendCallback(() => Shake());
+            //turnOffSequence.AppendCallback(() => Shake());
             
             turnOffSequence.AppendCallback(() =>
             {
@@ -103,6 +106,7 @@ namespace Visual
             });
 
             turnOffSequence.Play();
+            return null;
         }
 
         public void TurnOnTV()
@@ -112,7 +116,7 @@ namespace Visual
             turnOnSequence.AppendCallback(() => { rawImage.DOFade(onOpacity, 0.2f).SetEase(Ease.InOutQuad); });
             turnOnSequence.AppendInterval(0.2f);
 
-            turnOnSequence.AppendCallback(() => Shake());
+            //turnOnSequence.AppendCallback(() => Shake());
 
             turnOnSequence.AppendCallback(() =>
             {
@@ -163,7 +167,9 @@ namespace Visual
 
         private void Shake(float strength = 10f, float duration = 0.3f)
         {
-            rawImage.rectTransform
+            _shakeTween?.Kill();
+    
+            _shakeTween = rawImage.rectTransform
                 .DOShakeAnchorPos(duration, strength, 20, 90, false, true)
                 .SetEase(Ease.OutQuad);
         }
