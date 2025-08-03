@@ -13,6 +13,8 @@ namespace GamePlay.Objects.Heroes
         [SerializeField] private int health;
         [SerializeField] private DamageType damageType;
         [SerializeField] private float dRPer;
+        
+        public float DRPer{get=> dRPer;set => dRPer = value;}
         public DamageType DamageType
         {
             get => damageType;

@@ -125,26 +125,23 @@ public class AudioManager : Singleton<AudioManager>
 
     private void HandleHeroHitSound(int finalDamage)
     {
-        //20是预留数，之后可能会改成别的变量
-        if (finalDamage > 20 * 0.8f)
+        switch (_hero.DRPer)
         {
-            heroHitAudioSource[0].Play();
-        }
-        else if (finalDamage > 20 * 0.6f)
-        {
-            heroHitAudioSource[1].Play();
-        }
-        else if (finalDamage > 20 * 0.4f)
-        {
-            heroHitAudioSource[2].Play();
-        }
-        else if (finalDamage > 20 * 0.2f)
-        {
-            heroHitAudioSource[3].Play();
-        }
-        else 
-        {
-            heroHitAudioSource[4].Play();
+            case > 0.8f:
+                heroHitAudioSource[4].Play();
+                break;
+            case > 0.6f:
+                heroHitAudioSource[3].Play();
+                break;
+            case > 0.4f:
+                heroHitAudioSource[2].Play();
+                break;
+            case > 0.2f:
+                heroHitAudioSource[1].Play();
+                break;
+            default:
+                heroHitAudioSource[0].Play();
+                break;
         }
     }
 }

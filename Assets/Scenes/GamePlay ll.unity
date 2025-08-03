@@ -1567,6 +1567,7 @@ RectTransform:
   - {fileID: 1112819867}
   - {fileID: 955175366}
   - {fileID: 1963395497}
+  - {fileID: 1298404201}
   m_Father: {fileID: 1013341361}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3265,7 +3266,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &744614310
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5934,6 +5935,7 @@ MonoBehaviour:
   - {fileID: 1112819868}
   - {fileID: 955175367}
   - {fileID: 1963395498}
+  - {fileID: 1298404202}
 --- !u!4 &1225174336
 Transform:
   m_ObjectHideFlags: 0
@@ -6056,6 +6058,64 @@ RectTransform:
   m_AnchoredPosition: {x: -0.0024414, y: -0.0025177}
   m_SizeDelta: {x: 1146.5, y: 735.56}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1298404200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1298404201}
+  - component: {fileID: 1298404202}
+  m_Layer: 5
+  m_Name: Card1 (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1298404201
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298404200}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 317846573}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1298404202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298404200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bd504f4c1e679e4ea22b87e0fbecd28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardLocalPosition: {x: 0, y: 0, z: 0}
+  isFlipped: 0
+  TowerType: 6
+  TowerPrefab: {fileID: 4424409528615533993, guid: 85230a4b842bfff47a570c856be1b768, type: 3}
+  CanBuildOnRoad: 0
+  CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
+  CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
+  cd: 0
+  maxChargingIndex: 1
+  nowChargingIndex: 0
 --- !u!1 &1381063272
 GameObject:
   m_ObjectHideFlags: 0
@@ -9692,7 +9752,7 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: 1618707750, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  cd: 999
+  cd: 0
   maxChargingIndex: 1
   nowChargingIndex: 0
 --- !u!1 &1912559153
@@ -9781,8 +9841,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardLocalPosition: {x: 0, y: 0, z: 0}
   isFlipped: 0
-  TowerType: 0
-  TowerPrefab: {fileID: 4424409528615533993, guid: 51d8073c83e21874d94249df078a0674, type: 3}
+  TowerType: 9
+  TowerPrefab: {fileID: 4424409528615533993, guid: 85230a4b842bfff47a570c856be1b768, type: 3}
   CanBuildOnRoad: 0
   CardFace: {fileID: 1241273606, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
@@ -9844,7 +9904,7 @@ MonoBehaviour:
   CanBuildOnRoad: 0
   CardFace: {fileID: -1835371180, guid: f1147ff15b71a4449b04e4f7a53c8265, type: 3}
   CardBack: {fileID: 358598884, guid: 4667df14954610140a7f7a3d89cde0c3, type: 3}
-  cd: 1
+  cd: 0
   maxChargingIndex: 1
   nowChargingIndex: 0
 --- !u!1 &1994248501
