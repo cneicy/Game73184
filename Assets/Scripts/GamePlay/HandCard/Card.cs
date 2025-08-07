@@ -57,6 +57,28 @@ namespace GamePlay.HandCard
             nowChargingIndex = maxChargingIndex;
         }
 
+        
+        
+        public void EndCooldownImmediately()
+        {
+            // 确保卡牌当前处于翻转状态（背面朝上）
+            if (!isFlipped) return;
+
+            // 停止正在进行的翻转协程
+            if (_flipBackCoroutine != null)
+            {
+                StopCoroutine(_flipBackCoroutine);
+                _flipBackCoroutine = null;
+            }
+
+            // 立即执行翻转
+            CardEffect.Instance.CardFlip(isFlipped, transform);
+            isFlipped = !isFlipped; // 更新翻转状态
+        
+            // 重置充能状态
+            nowChargingIndex = maxChargingIndex;
+        }
+        
         public void UpdateCardData(Card cardData)
         {
             TowerType = cardData.TowerType;
@@ -94,11 +116,9 @@ namespace GamePlay.HandCard
         
         public void AfterBuilt(float cd)
         {
-            // 执行原始翻转
             CardEffect.Instance.CardFlip(isFlipped, transform);
             isFlipped = !isFlipped;
-    
-            // 启动/重置计时器
+            
             if (_flipBackCoroutine != null)
             {
                 StopCoroutine(_flipBackCoroutine);
@@ -119,12 +139,7 @@ namespace GamePlay.HandCard
                 _maskProportion = nowChargingIndex / maxChargingIndex;
             }
         }
-
-
-        public void ChangeMask()
-        {
-            
-        }
+        
         
         public void Interact()
         {
@@ -162,7 +177,7 @@ namespace GamePlay.HandCard
         {
             yield return new WaitForSeconds(delay);
     
-            // 执行翻转恢复
+            
             CardEffect.Instance.CardFlip(isFlipped, transform);
             isFlipped = !isFlipped;
             LoadCardData();
