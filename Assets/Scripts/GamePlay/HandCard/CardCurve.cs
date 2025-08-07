@@ -33,12 +33,15 @@ namespace GamePlay.HandCard
             return null;
         }
 
-        /*[EventSubscribe("PowerOff")]
+        [EventSubscribe("PowerOff")]
         public object HideCardAnimation(string s = "")
         {
-            StartCoroutine(nameof(HideAllCard));
+            foreach (var card in _handCards)
+            {
+                card.GetComponent<Card>().EndCooldownImmediately();
+            }
             return null;
-        }*/
+        }
         
         private void OnEnable()
         {

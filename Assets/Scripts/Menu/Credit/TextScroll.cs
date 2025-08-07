@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Event;
+using GamePlay;
 using UnityEngine;
 
 namespace Menu.Credit
@@ -24,6 +25,7 @@ namespace Menu.Credit
         {
             if(EventManager.Instance)
                 EventManager.Instance.UnregisterAllEventsForObject(this);
+            Debug.Log(GameManager.Instance.GameState);
         }
         
         private void Start()
@@ -33,7 +35,7 @@ namespace Menu.Credit
             {
                 _textPositions.Add(t.localPosition);
             }
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
 
         [EventSubscribe("OpenCredit")]

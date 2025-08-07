@@ -101,10 +101,11 @@ namespace GamePlay.Objects.Heroes
                 }
                 case DamageType.Normal:
                 {
-                    dRPer += health / (float)MaxHealth * 0.1f;
+                    dRPer += health / (float)MaxHealth * 0.07f;
                     if (dRPer >= 1)
                     {
                         dRPer = 1;
+                        CheckHealth();
                         return 0;
                     }
 
@@ -135,11 +136,13 @@ namespace GamePlay.Objects.Heroes
 
         public void CheckHealth()
         {
-            if (!(health <= 0)) return;
-            health = 0;
-            Debug.Log("Hero死亡");
-            EventManager.Instance.TriggerEvent("GameOver", "等待戈多");
-            gameObject.SetActive(false);
+            if (health <= 0)
+            {
+                health = 0;
+                Debug.Log("Hero死亡");
+                EventManager.Instance.TriggerEvent("GameOver", "等待戈多");
+                gameObject.SetActive(false);
+            }
         }
 
         public void OnTriggerEnter2D(Collider2D other)
